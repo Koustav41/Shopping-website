@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping cart</title>
+    <link rel="website icon" type="jpg" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY_H7uzaQjBVh27ubieyx0xNG89B3amksS7g&s">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .cart-bg {
+            background-color: #1ebba4;
+        }
+    </style>
+</head>
+<body class="cart-bg">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">Your family Store</a>
+        </div>
+    </nav>
+     
+    
+    <div class="container py-5">
+        <h2 class="mb-4">Your Cart</h2>
+        <div id="cart-items"></div>
+        <div id="cart-total" class="mt-3 fw-bold"></div>
+        <button id="clear-cart" class="btn btn-danger mt-3">clear cart</button>
+        <button id="checkout" class="btn btn-success mt-3">Checkout</button>
+    </div>
+    <script>
+        function loadCart() {
+            return JSON.parse(localStorage.getItem('cart') || '[]');
+        }
+
+        // Save cart to localStorage
+        function saveCart(cart) {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Render cart items
+        function renderCart() {
+            const cart = loadCart();
+            const cartItemsDiv = document.getElementById('cart-items');
+            const cartTotalDiv = document.getElementById('cart-total');
+            cartItemsDiv.innerHTML = '';
+            let total = 0;
+
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
+                cartTotalDiv.innerHTML = '';
+                return;
+            }
+
+            const table = document.createElement('table');
+            table.className = 'table table-bordered';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price (₹)</th>
+                        <th>Quantity</th>
+                        <th>Subtotal (₹)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${cart.map(item => {
+                        const subtotal = item.price * item.quantity;
+                        total += subtotal;
+                        return `
+                            <tr>
+                                <td>${item.title}</td>
+                                <td>${item.price.toFixed(2)}</td>
+                                <td>${item.quantity}</td>
+                                <td>${subtotal.toFixed(2)}</td>
+                            </tr>
+                        `;
+                    }).join('')}
+                </tbody>
+            `;
+            cartItemsDiv.appendChild(table);
+            cartTotalDiv.innerHTML = `Total: ₹${total.toFixed(2)}`;
+        }
+
+        // Clear cart
+        document.addEventListener('DOMContentLoaded', function () {
+            renderCart();
+            document.getElementById('clear-cart').addEventListener('click', function () {
+                localStorage.removeItem('cart');
+                renderCart();
+            });
+        });
+    </script>
+</body>
+</html>
