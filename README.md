@@ -3,7 +3,7 @@
 Welcome to the **Shopping Website Project**!  
 This is a modern, responsive online gadgets shop where you can explore and buy the latest tech and gadgets. Built with **HTML**, **CSS**, and **JavaScript** for a smooth and interactive user experience.
 
-![Shopping Website Preview](/https://big-small-store-4b1e07.netlify.app/)
+
 
 ---
 
