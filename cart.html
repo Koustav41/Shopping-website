@@ -3,93 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping cart</title>
-    <link rel="website icon" type="jpg" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY_H7uzaQjBVh27ubieyx0xNG89B3amksS7g&s">
-    <link rel="stylesheet" href="style.css">
+    <title>Shopping Cart - Your Family Store</title>
+    <!-- website icon -->
+    <link rel="website icon" type="jpg" href="https://png.pngtree.com/png-clipart/20240604/original/pngtree-icon-shopping-store-design-for-ecommerce-website-vector-picture-image_15485092.png">
+    
+    <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .cart-bg {
-            background-color: #1ebba4;
-        }
-    </style>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom premium styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Central theme loader (immediate execution prevents FOUT) -->
+    <script src="theme.js"></script>
 </head>
-<body class="cart-bg">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<body>
+
+    <!-- Sticky Glass Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="index.html">Your family Store</a>
+            <a class="brand-logo" href="index.html">
+                <i class="fa-solid fa-laptop-code"></i> Your Family Store
+            </a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="index.html#products">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom active" href="cart.html">
+                            <i class="fa-solid fa-shopping-cart me-1"></i> Cart
+                        </a>
+                    </li>
+                    <li>
+                        <button id="theme-toggle" class="theme-btn" type="button" aria-label="Toggle theme">
+                            <i class="fas fa-sun"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-     
-    
-    <div class="container py-5">
-        <h2 class="mb-4">Your Cart</h2>
-        <div id="cart-items"></div>
-        <div id="cart-total" class="mt-3 fw-bold"></div>
-        <button id="clear-cart" class="btn btn-danger mt-3">clear cart</button>
-        <button id="checkout" class="btn btn-success mt-3">Checkout</button>
+
+    <!-- Cart Layout Grid Container -->
+    <div class="container py-5" style="min-height: calc(100vh - 160px);">
+        <h2 class="cart-header-title"><i class="fa-solid fa-cart-shopping text-cyan me-3"></i>Your Shopping Cart</h2>
+        
+        <div class="row g-4" id="cart-dashboard-row">
+            
+            <!-- Left Side: Cart Items Table -->
+            <div class="col-lg-8">
+                <div class="cart-list-container">
+                    <div class="table-responsive">
+                        <table class="table cart-table" id="cart-elements-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Subtotal</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cart-items-body">
+                                <!-- Dynamically populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="cart-empty-state" class="text-center py-5 d-none">
+                        <i class="fa-solid fa-cart-flatbed-empty text-dim mb-4" style="font-size: 4rem;"></i>
+                        <h4 class="text-muted mb-3">Your cart is currently empty</h4>
+                        <p class="text-dim mb-4">Go explore our catalog and grab some premium tech gadgets!</p>
+                        <a href="index.html#products" class="hero-action-btn"><i class="fa-solid fa-shop me-2"></i>Return to Shop</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: Order Summary Card -->
+            <div class="col-lg-4">
+                <div class="cart-summary-card" id="cart-summary-block">
+                    <h4 class="cart-summary-title">Order Summary</h4>
+                    
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="summary-subtotal">₹0.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping Cost</span>
+                        <span id="summary-shipping">₹0.00</span>
+                    </div>
+                    <div class="summary-row d-none" id="summary-discount-row">
+                        <span>Promo Discount (20%)</span>
+                        <span class="text-emerald" id="summary-discount">-₹0.00</span>
+                    </div>
+                    
+                    <!-- Promo Code Block -->
+                    <div class="promo-input-group">
+                        <input type="text" class="form-control promo-control" id="promo-code-input" placeholder="Enter coupon code (e.g. SAVE20)">
+                        <button class="btn-apply-promo" id="btn-apply-discount" type="button">Apply</button>
+                    </div>
+                    <div id="promo-status-msg" class="small mb-3 d-none"></div>
+
+                    <div class="summary-row total">
+                        <span>Estimated Total</span>
+                        <span class="total-price" id="summary-total">₹0.00</span>
+                    </div>
+                    
+                    <button class="cart-checkout-btn mt-4" id="btn-open-checkout" type="button">
+                        <i class="fa-solid fa-credit-card me-2"></i>Proceed to Checkout
+                    </button>
+                </div>
+            </div>
+
+        </div>
     </div>
+
+    <!-- Interactive Checkout Glass Modal -->
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-glass-content">
+                
+                <div class="modal-glass-header d-flex justify-content-between align-items-center">
+                    <h5 class="modal-glass-title" id="checkoutModalLabel"><i class="fa-solid fa-shield-halved text-cyan me-2"></i>Secure Payment Gateway</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body p-4" id="checkout-modal-body">
+                    <p class="small text-muted mb-4">Select your preferred payment method and complete the purchase.</p>
+                    
+                    <div class="payment-selector">
+                        <div class="payment-option active" data-method="upi">
+                            <span class="payment-option-dot"></span>
+                            <span class="fw-semibold"><i class="fa-solid fa-mobile-screen-button text-cyan me-2"></i>UPI / QR Code</span>
+                        </div>
+                        <div class="payment-option" data-method="card">
+                            <span class="payment-option-dot"></span>
+                            <span class="fw-semibold"><i class="fa-solid fa-credit-card text-emerald me-2"></i>Credit / Debit Card</span>
+                        </div>
+                        <div class="payment-option" data-method="net">
+                            <span class="payment-option-dot"></span>
+                            <span class="fw-semibold"><i class="fa-solid fa-building-columns text-warning me-2"></i>Net Banking</span>
+                        </div>
+                    </div>
+
+                    <!-- UPI Details Form -->
+                    <div class="payment-details-form" id="upi-details-form">
+                        <div class="floating-input-group mt-3">
+                            <label class="floating-label">Enter UPI ID</label>
+                            <input type="text" class="form-control auth-input" id="upi-id-input" placeholder="username@upi" value="user@ybl">
+                        </div>
+                    </div>
+
+                    <!-- Card Details Form -->
+                    <div class="payment-details-form d-none" id="card-details-form">
+                        <div class="floating-input-group mt-3">
+                            <label class="floating-label">Card Number</label>
+                            <input type="text" class="form-control auth-input" placeholder="4111 2222 3333 4444">
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="floating-input-group">
+                                    <label class="floating-label">Expiry Date</label>
+                                    <input type="text" class="form-control auth-input" placeholder="MM/YY">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="floating-input-group">
+                                    <label class="floating-label">CVV</label>
+                                    <input type="password" class="form-control auth-input" placeholder="***">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Net Banking Form -->
+                    <div class="payment-details-form d-none" id="net-details-form">
+                        <div class="floating-input-group mt-3">
+                            <label class="floating-label">Select Bank</label>
+                            <select class="form-select auth-input text-white" style="background-color: var(--bg-base) !important;">
+                                <option value="sbi">State Bank of India</option>
+                                <option value="hdfc">HDFC Bank</option>
+                                <option value="icici">ICICI Bank</option>
+                                <option value="axis">Axis Bank</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button class="btn-submit-auth mt-4" id="btn-complete-order" type="button">
+                        <i class="fa-solid fa-lock me-2"></i>Pay <span id="checkout-amount-span">₹0.00</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sleek Custom Toast Container -->
+    <div class="custom-toast-container" id="toast-alerts-box"></div>
+
+    <footer class="footer-custom py-5 mt-auto">
+        <div class="container text-center small text-muted">
+            &copy; 2026 Your Family Store (Khardaha Branch). All Rights Reserved. Secure SSL Payment Hub.
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Cart engine handler logic -->
     <script>
-        function loadCart() {
-            return JSON.parse(localStorage.getItem('cart') || '[]');
+        // Load cart items from LocalStorage
+        let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        let promoApplied = false;
+        const discountRate = 0.20; // 20% discount
+        let selectedPaymentMethod = 'upi';
+
+        document.addEventListener('DOMContentLoaded', function () {
+            renderCart();
+            initPromoCode();
+            initCheckoutFlow();
+        });
+
+        // 1. Show custom premium notifications
+        function showToast(message, type = 'success') {
+            const toastContainer = document.getElementById('toast-alerts-box');
+            if (!toastContainer) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            
+            let iconClass = 'fa-check-circle';
+            if (type === 'error') {
+                iconClass = 'fa-exclamation-circle';
+                toast.style.borderLeftColor = 'var(--accent-danger)';
+            } else if (type === 'info') {
+                iconClass = 'fa-info-circle';
+                toast.style.borderLeftColor = '#3b82f6';
+            }
+
+            toast.innerHTML = `
+                <i class="fa-solid ${iconClass} custom-toast-icon" style="color: ${type === 'error' ? 'var(--accent-danger)' : (type === 'info' ? '#3b82f6' : 'var(--accent-cyan)')}"></i>
+                <div class="custom-toast-body">${message}</div>
+            `;
+
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3500);
         }
 
-        // Save cart to localStorage
-        function saveCart(cart) {
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
-
-        // Render cart items
+        // 2. Render cart elements
         function renderCart() {
-            const cart = loadCart();
-            const cartItemsDiv = document.getElementById('cart-items');
-            const cartTotalDiv = document.getElementById('cart-total');
-            cartItemsDiv.innerHTML = '';
-            let total = 0;
-
+            const tbody = document.getElementById('cart-items-body');
+            const emptyState = document.getElementById('cart-empty-state');
+            const cartTable = document.getElementById('cart-elements-table');
+            const summaryBlock = document.getElementById('cart-summary-block');
+            
+            tbody.innerHTML = '';
+            
             if (cart.length === 0) {
-                cartItemsDiv.innerHTML = '<p>Your cart is empty.</p>';
-                cartTotalDiv.innerHTML = '';
+                cartTable.classList.add('d-none');
+                emptyState.classList.remove('d-none');
+                summaryBlock.classList.add('d-none');
                 return;
             }
 
-            const table = document.createElement('table');
-            table.className = 'table table-bordered';
-            table.innerHTML = `
-                <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Price (₹)</th>
-                        <th>Quantity</th>
-                        <th>Subtotal (₹)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${cart.map(item => {
-                        const subtotal = item.price * item.quantity;
-                        total += subtotal;
-                        return `
-                            <tr>
-                                <td>${item.title}</td>
-                                <td>${item.price.toFixed(2)}</td>
-                                <td>${item.quantity}</td>
-                                <td>${subtotal.toFixed(2)}</td>
-                            </tr>
-                        `;
-                    }).join('')}
-                </tbody>
-            `;
-            cartItemsDiv.appendChild(table);
-            cartTotalDiv.innerHTML = `Total: ₹${total.toFixed(2)}`;
+            cartTable.classList.remove('d-none');
+            emptyState.classList.add('d-none');
+            summaryBlock.classList.remove('d-none');
+
+            let subtotal = 0;
+
+            cart.forEach((item, index) => {
+                const itemSubtotal = item.price * item.quantity;
+                subtotal += itemSubtotal;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <div class="cart-product-cell">
+                            <img src="${item.img || 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800'}" class="cart-product-thumb" alt="${item.title}">
+                            <span class="cart-product-title">${item.title}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="cart-product-price">₹${item.price.toFixed(2)}</span>
+                    </td>
+                    <td>
+                        <div class="qty-container mb-0">
+                            <button class="qty-btn" type="button" onclick="adjustQty(${index}, -1)"><i class="fa-solid fa-minus"></i></button>
+                            <input type="text" class="qty-val" value="${item.quantity}" readonly>
+                            <button class="qty-btn" type="button" onclick="adjustQty(${index}, 1)"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="cart-product-subtotal">₹${itemSubtotal.toFixed(2)}</span>
+                    </td>
+                    <td>
+                        <button class="cart-btn-remove" type="button" onclick="removeItem(${index})">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            recalculateSummary(subtotal);
         }
 
-        // Clear cart
-        document.addEventListener('DOMContentLoaded', function () {
+        // 3. Increment/Decrement Cart Quantities
+        window.adjustQty = function(index, delta) {
+            cart[index].quantity += delta;
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
             renderCart();
-            document.getElementById('clear-cart').addEventListener('click', function () {
-                localStorage.removeItem('cart');
-                renderCart();
+        }
+
+        // 4. Remove Line Item
+        window.removeItem = function(index) {
+            const title = cart[index].title;
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            showToast(`${title} removed from cart.`, 'info');
+        }
+
+        // 5. Recalculate summary details
+        function recalculateSummary(subtotal) {
+            const summarySubtotal = document.getElementById('summary-subtotal');
+            const summaryShipping = document.getElementById('summary-shipping');
+            const discountRow = document.getElementById('summary-discount-row');
+            const summaryDiscount = document.getElementById('summary-discount');
+            const summaryTotal = document.getElementById('summary-total');
+
+            summarySubtotal.innerText = `₹${subtotal.toFixed(2)}`;
+
+            // Shipping rules: Free if subtotal > ₹10,000, else ₹150
+            const shipping = (subtotal >= 10000) ? 0 : 150;
+            summaryShipping.innerText = shipping === 0 ? 'FREE' : `₹${shipping.toFixed(2)}`;
+
+            let discount = 0;
+            if (promoApplied) {
+                discount = subtotal * discountRate;
+                discountRow.classList.remove('d-none');
+                summaryDiscount.innerText = `-₹${discount.toFixed(2)}`;
+            } else {
+                discountRow.classList.add('d-none');
+            }
+
+            const total = subtotal + shipping - discount;
+            summaryTotal.innerText = `₹${total.toFixed(2)}`;
+            document.getElementById('checkout-amount-span').innerText = `₹${total.toFixed(2)}`;
+        }
+
+        // 6. Promo code handlers
+        function initPromoCode() {
+            const applyBtn = document.getElementById('btn-apply-discount');
+            const promoInput = document.getElementById('promo-code-input');
+            const promoStatus = document.getElementById('promo-status-msg');
+
+            applyBtn.addEventListener('click', function() {
+                const code = promoInput.value.trim().toUpperCase();
+                
+                if (code === 'SAVE20') {
+                    promoApplied = true;
+                    promoStatus.classList.remove('d-none', 'text-danger');
+                    promoStatus.classList.add('text-success');
+                    promoStatus.innerText = 'Coupon "SAVE20" applied successfully! 20% discount added.';
+                    showToast('Coupon "SAVE20" applied! You saved 20%!', 'success');
+                    renderCart();
+                } else if (code === '') {
+                    showToast('Please enter a coupon code.', 'error');
+                } else {
+                    promoApplied = false;
+                    promoStatus.classList.remove('d-none', 'text-success');
+                    promoStatus.classList.add('text-danger');
+                    promoStatus.innerText = 'Invalid coupon code. Try code "SAVE20"!';
+                    showToast('Invalid coupon code.', 'error');
+                    renderCart();
+                }
             });
-        });
+        }
+
+        // 7. Payment checkout flow
+        function initCheckoutFlow() {
+            const checkoutModal = new bootstrap.Modal(document.getElementById('checkoutModal'));
+            const openCheckoutBtn = document.getElementById('btn-open-checkout');
+            const completeOrderBtn = document.getElementById('btn-complete-order');
+
+            openCheckoutBtn.addEventListener('click', function() {
+                // Ensure user is logged in
+                const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+                if (!currentUser) {
+                    showToast('Please log in to your account first.', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 1200);
+                    return;
+                }
+                checkoutModal.show();
+            });
+
+            // Handle payment options switches
+            const paymentOptions = document.querySelectorAll('.payment-option');
+            paymentOptions.forEach(opt => {
+                opt.addEventListener('click', function() {
+                    paymentOptions.forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+
+                    selectedPaymentMethod = this.getAttribute('data-method');
+                    
+                    // Hide all details forms
+                    document.querySelectorAll('.payment-details-form').forEach(f => f.classList.add('d-none'));
+                    
+                    // Show target details form
+                    document.getElementById(`${selectedPaymentMethod}-details-form`).classList.remove('d-none');
+                });
+            });
+
+            // Complete Purchase Click
+            completeOrderBtn.addEventListener('click', async function() {
+                const body = document.getElementById('checkout-modal-body');
+                
+                // Show secure loader
+                body.innerHTML = `
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-cyan mb-4" style="width: 3.5rem; height: 3.5rem;" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <h4 class="fw-bold text-white mb-2">Authorizing Transaction</h4>
+                        <p class="text-muted">Encrypting payment gateway pipeline. Please do not close or reload this window...</p>
+                    </div>
+                `;
+
+                // Calculate exact values for backend order creation
+                let subtotalVal = cart.reduce((tot, item) => tot + item.price * item.quantity, 0);
+                let shippingVal = (subtotalVal >= 10000) ? 0 : 150;
+                let discountVal = promoApplied ? subtotalVal * discountRate : 0;
+                let totalVal = subtotalVal + shippingVal - discountVal;
+                let orderIdVal = `YG-${Math.floor(100000 + Math.random() * 900000)}`;
+
+                const orderPayload = {
+                    items: cart,
+                    subtotal: subtotalVal,
+                    shippingCost: shippingVal,
+                    discount: discountVal,
+                    total: totalVal,
+                    paymentMethod: selectedPaymentMethod,
+                    orderId: orderIdVal
+                };
+
+                const token = localStorage.getItem('token');
+
+                try {
+                    const response = await fetch('/api/orders', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(orderPayload)
+                    });
+                    const data = await response.json();
+
+                    if (data.success) {
+                        setTimeout(() => {
+                            // Purchase complete confirmation screen
+                            body.innerHTML = `
+                                <div class="text-center py-4">
+                                    <i class="fa-solid fa-circle-check text-emerald mb-4 animate-bounce" style="font-size: 5rem; text-shadow: 0 0 20px var(--accent-glow);"></i>
+                                    <h3 class="fw-bold text-white mb-3">Order Confirmed!</h3>
+                                    <p class="text-muted px-3">Thank you for shopping with us! Your transaction has been approved and your premium tech order has been logged successfully.</p>
+                                    
+                                    <div class="bg-dark p-3 rounded-3 text-start mx-3 my-4 border border-secondary" style="background-color: rgba(10, 14, 23, 0.6) !important;">
+                                        <h6 class="text-cyan fw-bold mb-3"><i class="fa-solid fa-receipt me-2"></i>Invoice Details</h6>
+                                        <p class="small mb-1 text-muted">Order ID: <span class="text-white fw-semibold">#${orderIdVal}</span></p>
+                                        <p class="small mb-1 text-muted">Delivery Address: <span class="text-white fw-semibold">Khardaha, West Bengal</span></p>
+                                        <p class="small mb-1 text-muted">Payment: <span class="text-white fw-semibold">${selectedPaymentMethod.toUpperCase()} Approved</span></p>
+                                    </div>
+
+                                    <button class="hero-action-btn mt-3" type="button" onclick="window.location.href='index.html'"><i class="fa-solid fa-house me-2"></i>Return to Home</button>
+                                </div>
+                            `;
+                            
+                            // Clear cart
+                            localStorage.removeItem('cart');
+                            cart = [];
+                        }, 1500);
+                    } else {
+                        showToast(data.message || 'Failed to authorize order on the server.', 'error');
+                        setTimeout(() => { window.location.reload(); }, 1500);
+                    }
+                } catch (error) {
+                    showToast('Server connection failed. Could not register order.', 'error');
+                    setTimeout(() => { window.location.reload(); }, 1500);
+                }
+            });
+        }
     </script>
 </body>
 </html>
