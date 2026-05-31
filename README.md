@@ -60,9 +60,31 @@ This is a modern, responsive online gadgets shop where you can explore and buy t
    cd Shopping-website
    ```
 
-2. **Open `index.html` in your browser:**
-   - Double-click `index.html`, or
-   - Use a Live Server extension in your code editor.
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Create a `.env` file** in the project root if it does not already exist, and add:
+   ```env
+   PORT=5000
+   MONGO_URI=mongodb://127.0.0.1:27017/shopping-website
+   JWT_SECRET=super_secret_tech_world_key_12345
+   ```
+
+4. **Start MongoDB** locally before running the server.
+   - If you use MongoDB Community Edition, start the service first.
+   - Or use a valid hosted MongoDB connection string.
+
+5. **Run the backend server:**
+   ```bash
+   npm run dev
+   ```
+
+6. **Open the app in your browser:**
+   - Visit `http://localhost:5000`
+
+> Do not open `index.html` directly from the file system. The app relies on backend API routes under `/api/*`.
 
 ---
 
