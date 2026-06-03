@@ -466,7 +466,8 @@
                 const token = localStorage.getItem('token');
 
                 try {
-                    const response = await fetch('/api/orders', {
+                    const apiUrl = typeof window.getApiUrl === 'function' ? window.getApiUrl('/api/orders') : '/api/orders';
+                    const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

@@ -219,65 +219,151 @@ function initSearchAndFiltering() {
     });
 }
 
+// Fallback catalog data when database is offline
+const FALLBACK_PRODUCTS = [
+    {
+        title: "Premium Wired headphones",
+        price: 99.99,
+        originalPrice: 124.99,
+        category: "Audio",
+        stockCount: 12,
+        stockStatus: "low",
+        image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=800",
+        badge: "20% Off"
+    },
+    {
+        title: "Ultra Speed Pendrives (128GB)",
+        price: 199.99,
+        category: "Storage",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?q=80&w=800",
+        badge: "New"
+    },
+    {
+        title: "Bluetooth Wireless Earphone",
+        price: 500.99,
+        originalPrice: 625.99,
+        category: "Audio",
+        stockCount: 3,
+        stockStatus: "low",
+        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=800",
+        badge: "Hot"
+    },
+    {
+        title: "Wireless ANC Over-Ear Headphone",
+        price: 1000.99,
+        originalPrice: 1250.00,
+        category: "Audio",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800",
+        badge: "Offer"
+    },
+    {
+        title: "AMOLED Display Smart Watch",
+        price: 1200.99,
+        category: "Wearables",
+        stockCount: 4,
+        stockStatus: "low",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800",
+        badge: "Hot"
+    },
+    {
+        title: "Mechanical RGB Gaming Keyboard",
+        price: 5000.99,
+        category: "Computers & Gaming",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800",
+        badge: "Offer"
+    }
+];
+
+// Helper to render products list
+function renderProductsList(productsList, isOffline = false) {
+    const catalogGrid = document.getElementById('catalog-grid');
+    if (!catalogGrid) return;
+    
+    catalogGrid.innerHTML = ''; // Clear loader / previous items
+    
+    if (isOffline) {
+        const offlineBanner = document.createElement('div');
+        offlineBanner.className = 'col-12';
+        offlineBanner.innerHTML = `
+            <div class="alert-offline text-center p-3 mb-4 rounded-3 border border-warning" style="background: rgba(245, 158, 11, 0.05); color: #f59e0b; font-family: var(--font-heading); font-weight: 500; font-size: 0.95rem; backdrop-filter: blur(10px);">
+                <i class="fa-solid fa-triangle-exclamation me-2 animate-pulse"></i>
+                <span>Offline Mode Active: Database connection delay. Loaded premium offline catalog.</span>
+            </div>
+        `;
+        catalogGrid.appendChild(offlineBanner);
+    }
+    
+    productsList.forEach(prod => {
+        const badgeHTML = prod.badge ? `<div class="card-badge ${prod.badge.toLowerCase().includes('offer') || prod.badge.toLowerCase().includes('off') ? 'badge-offer' : (prod.badge.toLowerCase() === 'new' ? 'badge-new' : 'badge-hot')}">${prod.badge}</div>` : '';
+        const originalPriceHTML = prod.originalPrice ? `<span class="product-original-price">₹${prod.originalPrice.toFixed(2)}</span>` : '';
+        const stockBadgeClass = prod.stockStatus === 'instock' ? 'stock-instock' : 'stock-low';
+        const stockBadgeText = prod.stockStatus === 'instock' ? 'In Stock' : `Only ${prod.stockCount} Left!`;
+
+        const col = document.createElement('div');
+        col.className = 'col product-card-item';
+        col.setAttribute('data-category', prod.category);
+        col.innerHTML = `
+            <div class="product-card">
+                ${badgeHTML}
+                <div class="product-img-wrapper">
+                    <img src="${prod.image}" class="product-card-img" alt="${prod.title}">
+                </div>
+                <div class="product-details">
+                    <span class="product-category">${prod.category}</span>
+                    <h4 class="product-title">${prod.title}</h4>
+                    <div class="product-price-row">
+                        <span class="product-price">₹${prod.price.toFixed(2)}</span>
+                        ${originalPriceHTML}
+                    </div>
+                    <div class="product-stock-badge ${stockBadgeClass}">
+                        <span class="stock-dot"></span> ${stockBadgeText}
+                    </div>
+
+                    <div class="qty-container">
+                        <button class="qty-btn minus-btn" type="button"><i class="fa-solid fa-minus"></i></button>
+                        <input type="text" class="qty-val" value="1" readonly>
+                        <button class="qty-btn plus-btn" type="button"><i class="fa-solid fa-plus"></i></button>
+                    </div>
+                    <button class="btn-add-cart" type="button"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                </div>
+            </div>
+        `;
+        catalogGrid.appendChild(col);
+    });
+
+    // Initialize interactive handlers on freshly loaded dynamic cards
+    initQuantityAdjusters();
+    initAddToCart();
+    initSearchAndFiltering();
+}
+
 // 8. Dynamic Product Catalog Loader (Fetches from MongoDB and populates HTML cards)
 function loadProductsCatalog() {
     const catalogGrid = document.getElementById('catalog-grid');
     if (!catalogGrid) return;
 
-    fetch('/api/products')
-        .then(response => response.json())
+    const apiUrl = typeof window.getApiUrl === 'function' ? window.getApiUrl('/api/products') : '/api/products';
+
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success && data.data.length > 0) {
-                catalogGrid.innerHTML = ''; // Clear fallback HTML products
-
-                data.data.forEach(prod => {
-                    const badgeHTML = prod.badge ? `<div class="card-badge ${prod.badge.toLowerCase().includes('offer') || prod.badge.toLowerCase().includes('off') ? 'badge-offer' : (prod.badge.toLowerCase() === 'new' ? 'badge-new' : 'badge-hot')}">${prod.badge}</div>` : '';
-                    
-                    const originalPriceHTML = prod.originalPrice ? `<span class="product-original-price">₹${prod.originalPrice.toFixed(2)}</span>` : '';
-                    
-                    const stockBadgeClass = prod.stockStatus === 'instock' ? 'stock-instock' : 'stock-low';
-                    const stockBadgeText = prod.stockStatus === 'instock' ? 'In Stock' : `Only ${prod.stockCount} Left!`;
-
-                    const col = document.createElement('div');
-                    col.className = 'col product-card-item';
-                    col.setAttribute('data-category', prod.category);
-                    col.innerHTML = `
-                        <div class="product-card">
-                            ${badgeHTML}
-                            <div class="product-img-wrapper">
-                                <img src="${prod.image}" class="product-card-img" alt="${prod.title}">
-                            </div>
-                            <div class="product-details">
-                                <span class="product-category">${prod.category}</span>
-                                <h4 class="product-title">${prod.title}</h4>
-                                <div class="product-price-row">
-                                    <span class="product-price">₹${prod.price.toFixed(2)}</span>
-                                    ${originalPriceHTML}
-                                </div>
-                                <div class="product-stock-badge ${stockBadgeClass}">
-                                    <span class="stock-dot"></span> ${stockBadgeText}
-                                </div>
-
-                                <div class="qty-container">
-                                    <button class="qty-btn minus-btn" type="button"><i class="fa-solid fa-minus"></i></button>
-                                    <input type="text" class="qty-val" value="1" readonly>
-                                    <button class="qty-btn plus-btn" type="button"><i class="fa-solid fa-plus"></i></button>
-                                </div>
-                                <button class="btn-add-cart" type="button"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
-                            </div>
-                        </div>
-                    `;
-                    catalogGrid.appendChild(col);
-                });
-
-                // Initialize interactive handlers on freshly loaded dynamic cards
-                initQuantityAdjusters();
-                initAddToCart();
-                initSearchAndFiltering();
+                renderProductsList(data.data, false);
+            } else {
+                throw new Error("No products returned or API marked request unsuccessful.");
             }
         })
         .catch(err => {
-            console.error("Error loading products from database: ", err);
+            console.error("Error loading products from database, falling back: ", err);
+            renderProductsList(FALLBACK_PRODUCTS, true);
         });
 }
 
@@ -291,8 +377,10 @@ function initFeedbackForm() {
         const name = document.getElementById('feedback-name').value.trim();
         const email = document.getElementById('feedback-email').value.trim();
 
+        const apiUrl = typeof window.getApiUrl === 'function' ? window.getApiUrl('/api/feedback') : '/api/feedback';
+
         try {
-            const response = await fetch('/api/feedback', {
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ name, email })

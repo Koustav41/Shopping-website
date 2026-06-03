@@ -1,4 +1,12 @@
 // Central Theme Controller Utility
+window.getApiUrl = function (path) {
+    const origin = window.location.origin;
+    if (!origin || origin.startsWith('file://') || (origin.includes('localhost') && !origin.includes(':5000')) || (origin.includes('127.0.0.1') && !origin.includes(':5000'))) {
+        return 'http://localhost:5000' + path;
+    }
+    return path;
+};
+
 (function () {
     // 1. Immediately apply the saved theme to prevent FOUT (Flash of Un-themed Content)
     const savedTheme = localStorage.getItem('theme') || 'dark';
