@@ -28,4 +28,5 @@ app.use('/api/products', require('../routes/products'));
 app.use('/api/orders', require('../routes/orders'));
 app.use('/api/feedback', require('../routes/feedback'));
 
+// Export the Express app as the function handler for Vercel
 module.exports = app;
