@@ -2,7 +2,7 @@
 
 :root {
     --bg-base: #0a0e17;
-    --bg-surface: rgba(16, 22, 35, 0.65);
+    --bg-surface: rgba(16, 56, 143, 0.65);
     --bg-surface-hover: rgba(22, 32, 51, 0.85);
     --bg-glass: rgba(10, 14, 23, 0.4);
     --text-primary: #f8fafc;
@@ -43,7 +43,7 @@ html.light-theme {
     --bg-surface: rgba(255, 255, 255, 0.507);
     --bg-surface-hover: rgba(255, 255, 255, 0.575);
     --bg-glass: rgba(248, 250, 252, 0.6);
-    --text-primary: #0f172a;
+    --text-primary: #2b6d4c;
     --text-muted: #475569;
     --text-dim: #64748b;
     --accent-emerald: #059669;
@@ -59,10 +59,10 @@ html.light-theme {
 
     /* Light Theme Specific Adaptive Overrides */
     --bg-nav: rgba(248, 250, 252, 0.8);
-    --bg-nav-scrolled: rgba(248, 250, 252, 0.95);
+    --bg-nav-scrolled: rgba(248, 250, 252, 0.438);
     --bg-footer: rgba(241, 245, 249, 0.98);
-    --bg-modal: rgba(255, 255, 255, 0.9);
-    --bg-input: rgba(255, 255, 255, 0.85);
+    --bg-modal: rgba(255, 255, 255, 0.13);
+    --bg-input: rgba(255, 255, 255, 0.493);
     --bg-tab: rgba(15, 23, 42, 0.05);
     --bg-option: rgba(15, 23, 42, 0.02);
     --bg-announcement: linear-gradient(90deg, rgba(8, 145, 178, 0.08) 0%, rgba(5, 150, 105, 0.08) 100%);
@@ -272,9 +272,7 @@ h6 {
 .hero-title {
     font-size: 4rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #f8fafc 30%, #94a3b8 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #30cc1b3b;
     margin-bottom: 20px;
 }
 
