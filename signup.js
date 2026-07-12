@@ -15,24 +15,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         try {
-            const apiUrl = typeof window.getApiUrl === 'function' ? window.getApiUrl('/api/auth/register') : '/api/auth/register';
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password })
-            });
-            const data = await response.json();
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const userExists = users.some(u => u.email === email);
 
-            if (data.success) {
-                showToast('Registration successful! Redirecting to login...', 'success');
-                setTimeout(() => {
-                    window.location.href = 'login.html';
-                }, 1200);
-            } else {
-                showToast(data.message || 'Registration failed. Please try again.', 'error');
+            if (userExists) {
+                showToast('Email address already registered', 'error');
+                return;
             }
+
+            users.push({ name, email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+
+            showToast('Registration successful! Redirecting to login...', 'success');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1200);
         } catch (error) {
-            showToast('Server connection failed. Please try again later.', 'error');
+            showToast('Registration failed. Please try again.', 'error');
         }
     });
 });

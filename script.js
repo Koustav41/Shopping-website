@@ -219,8 +219,8 @@ function initSearchAndFiltering() {
     });
 }
 
-// Fallback catalog data when database is offline
-const FALLBACK_PRODUCTS = [
+// Full product catalog data (matching exactly the 22 premium gadgets in seed.js)
+const ALL_PRODUCTS = [
     {
         title: "Premium Wired headphones",
         price: 99.99,
@@ -250,6 +250,14 @@ const FALLBACK_PRODUCTS = [
         badge: "Hot"
     },
     {
+        title: "Ultra Low-Latency Gaming Tws",
+        price: 900.99,
+        category: "Audio",
+        stockStatus: "instock",
+        image: "image/Gemini_Generated_Image_p3ejslp3ejslp3ej.png",
+        badge: "New"
+    },
+    {
         title: "Wireless ANC Over-Ear Headphone",
         price: 1000.99,
         originalPrice: 1250.00,
@@ -268,12 +276,133 @@ const FALLBACK_PRODUCTS = [
         badge: "Hot"
     },
     {
+        title: "GPS Quadcopter Camera Drone",
+        price: 7000.99,
+        originalPrice: 8750.00,
+        category: "Smart Devices",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?q=80&w=800",
+        badge: "New"
+    },
+    {
         title: "Mechanical RGB Gaming Keyboard",
         price: 5000.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
         image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800",
         badge: "Offer"
+    },
+    {
+        title: "Surround Sound Home Theatre",
+        price: 20000.99,
+        category: "Audio",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=800",
+        badge: "New"
+    },
+    {
+        title: "RGB Wireless Gaming Mouse",
+        price: 2000.99,
+        category: "Computers & Gaming",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800",
+        badge: "Hot"
+    },
+    {
+        title: "Ergonomic Wired Mouse",
+        price: 200.99,
+        category: "Computers & Gaming",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=800"
+    },
+    {
+        title: "FHD Frameless IPS Monitor",
+        price: 13000.00,
+        originalPrice: 16250.00,
+        category: "Computers & Gaming",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=800",
+        badge: "Offer"
+    },
+    {
+        title: "Graphic Card (8GB VRAM)",
+        price: 45000.98,
+        category: "Computers & Gaming",
+        stockCount: 2,
+        stockStatus: "low",
+        image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=800",
+        badge: "Hot"
+    },
+    {
+        title: "ARGB Tempered Glass Cabinet",
+        price: 8000.99,
+        category: "Computers & Gaming",
+        stockStatus: "instock",
+        image: "https://zebronics.com/cdn/shop/files/ZEB-Phantom-pic2.jpg?v=1696845618&width=1200"
+    },
+    {
+        title: "Wireless Bluetooth Mic System",
+        price: 13500.99,
+        category: "Audio",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800",
+        badge: "New"
+    },
+    {
+        title: "Professional DSLR Digital Camera",
+        price: 70000.99,
+        originalPrice: 87500.00,
+        category: "Cameras & Phones",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800",
+        badge: "Offer"
+    },
+    {
+        title: "OnePlus Nord CE 4 5G",
+        price: 30000.78,
+        category: "Cameras & Phones",
+        stockStatus: "instock",
+        image: "https://image01-in.oneplus.net/ebp/202404/07/1-M00-52-A5-CpgM7mYR-yOAN0suAAH06ke98vE178.png"
+    },
+    {
+        title: "Samsung S22 5G (128GB)",
+        price: 29000.99,
+        originalPrice: 38600.00,
+        category: "Cameras & Phones",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=800",
+        badge: "25% Off"
+    },
+    {
+        title: "Realme 12 Pro+ 5G",
+        price: 32000.99,
+        category: "Cameras & Phones",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=800"
+    },
+    {
+        title: "Apple iPhone 16",
+        price: 78000.99,
+        category: "Cameras & Phones",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=800",
+        badge: "New"
+    },
+    {
+        title: "Apple iPhone 16 Pro Max",
+        price: 150000.00,
+        category: "Cameras & Phones",
+        stockCount: 1,
+        stockStatus: "low",
+        image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800",
+        badge: "Hot"
+    },
+    {
+        title: "iPhone 16 Glass Protective Cover",
+        price: 350.00,
+        category: "Accessories",
+        stockStatus: "instock",
+        image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=800"
     }
 ];
 
@@ -340,34 +469,25 @@ function renderProductsList(productsList, isOffline = false) {
     initSearchAndFiltering();
 }
 
-// 8. Dynamic Product Catalog Loader (Fetches from MongoDB and populates HTML cards)
+// 8. Dynamic Product Catalog Loader (Loads from localStorage)
 function loadProductsCatalog() {
     const catalogGrid = document.getElementById('catalog-grid');
     if (!catalogGrid) return;
 
-    const apiUrl = typeof window.getApiUrl === 'function' ? window.getApiUrl('/api/products') : '/api/products';
-
-    fetch(apiUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success && data.data.length > 0) {
-                renderProductsList(data.data, false);
-            } else {
-                throw new Error("No products returned or API marked request unsuccessful.");
-            }
-        })
-        .catch(err => {
-            console.error("Error loading products from database, falling back: ", err);
-            renderProductsList(FALLBACK_PRODUCTS, true);
-        });
+    try {
+        let storedProducts = JSON.parse(localStorage.getItem('products') || 'null');
+        if (!storedProducts) {
+            storedProducts = ALL_PRODUCTS;
+            localStorage.setItem('products', JSON.stringify(storedProducts));
+        }
+        renderProductsList(storedProducts, false);
+    } catch (err) {
+        console.error("Error loading products from localStorage, falling back: ", err);
+        renderProductsList(ALL_PRODUCTS, true);
+    }
 }
 
-// 9. Complaints Feedback form trigger
+// 9. Complaints Feedback form trigger (Saves to localStorage)
 function initFeedbackForm() {
     const form = document.getElementById('complaints-form');
     if (!form) return;
@@ -377,24 +497,19 @@ function initFeedbackForm() {
         const name = document.getElementById('feedback-name').value.trim();
         const email = document.getElementById('feedback-email').value.trim();
 
-        const apiUrl = typeof window.getApiUrl === 'function' ? window.getApiUrl('/api/feedback') : '/api/feedback';
-
         try {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email })
+            const feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
+            feedbacks.push({
+                name,
+                email,
+                date: new Date().toISOString()
             });
-            const data = await response.json();
+            localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
 
-            if (data.success) {
-                showToast(`Thank you, ${name}! Your feedback has been logged to the database.`, 'success');
-                form.reset();
-            } else {
-                showToast(data.message || 'Failed to submit feedback.', 'error');
-            }
+            showToast(`Thank you, ${name}! Your feedback has been logged to localStorage.`, 'success');
+            form.reset();
         } catch (error) {
-            showToast('Server connection failed. Please try again later.', 'error');
+            showToast('Failed to submit feedback.', 'error');
         }
     });
 }

@@ -452,7 +452,7 @@
                 let discountVal = promoApplied ? subtotalVal * discountRate : 0;
                 let totalVal = subtotalVal + shippingVal - discountVal;
                 let orderIdVal = `YG-${Math.floor(100000 + Math.random() * 900000)}`;
-
+                const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
                 const orderPayload = {
                     items: cart,
                     subtotal: subtotalVal,
@@ -460,53 +460,41 @@
                     discount: discountVal,
                     total: totalVal,
                     paymentMethod: selectedPaymentMethod,
-                    orderId: orderIdVal
+                    orderId: orderIdVal,
+                    userEmail: currentUser ? currentUser.email : 'guest@example.com',
+                    date: new Date().toISOString()
                 };
 
-                const token = localStorage.getItem('token');
-
                 try {
-                    const apiUrl = typeof window.getApiUrl === 'function' ? window.getApiUrl('/api/orders') : '/api/orders';
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify(orderPayload)
-                    });
-                    const data = await response.json();
+                    const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+                    orders.push(orderPayload);
+                    localStorage.setItem('orders', JSON.stringify(orders));
 
-                    if (data.success) {
-                        setTimeout(() => {
-                            // Purchase complete confirmation screen
-                            body.innerHTML = `
-                                <div class="text-center py-4">
-                                    <i class="fa-solid fa-circle-check text-emerald mb-4 animate-bounce" style="font-size: 5rem; text-shadow: 0 0 20px var(--accent-glow);"></i>
-                                    <h3 class="fw-bold text-white mb-3">Order Confirmed!</h3>
-                                    <p class="text-muted px-3">Thank you for shopping with us! Your transaction has been approved and your premium tech order has been logged successfully.</p>
-                                    
-                                    <div class="bg-dark p-3 rounded-3 text-start mx-3 my-4 border border-secondary" style="background-color: rgba(10, 14, 23, 0.6) !important;">
-                                        <h6 class="text-cyan fw-bold mb-3"><i class="fa-solid fa-receipt me-2"></i>Invoice Details</h6>
-                                        <p class="small mb-1 text-muted">Order ID: <span class="text-white fw-semibold">#${orderIdVal}</span></p>
-                                        <p class="small mb-1 text-muted">Delivery Address: <span class="text-white fw-semibold">Khardaha, West Bengal</span></p>
-                                        <p class="small mb-1 text-muted">Payment: <span class="text-white fw-semibold">${selectedPaymentMethod.toUpperCase()} Approved</span></p>
-                                    </div>
-
-                                    <button class="hero-action-btn mt-3" type="button" onclick="window.location.href='index.html'"><i class="fa-solid fa-house me-2"></i>Return to Home</button>
+                    setTimeout(() => {
+                        // Purchase complete confirmation screen
+                        body.innerHTML = `
+                            <div class="text-center py-4">
+                                <i class="fa-solid fa-circle-check text-emerald mb-4 animate-bounce" style="font-size: 5rem; text-shadow: 0 0 20px var(--accent-glow);"></i>
+                                <h3 class="fw-bold text-white mb-3">Order Confirmed!</h3>
+                                <p class="text-muted px-3">Thank you for shopping with us! Your transaction has been approved and your premium tech order has been logged successfully to localStorage.</p>
+                                
+                                <div class="bg-dark p-3 rounded-3 text-start mx-3 my-4 border border-secondary" style="background-color: rgba(10, 14, 23, 0.6) !important;">
+                                    <h6 class="text-cyan fw-bold mb-3"><i class="fa-solid fa-receipt me-2"></i>Invoice Details</h6>
+                                    <p class="small mb-1 text-muted">Order ID: <span class="text-white fw-semibold">#${orderIdVal}</span></p>
+                                    <p class="small mb-1 text-muted">Delivery Address: <span class="text-white fw-semibold">Khardaha, West Bengal</span></p>
+                                    <p class="small mb-1 text-muted">Payment: <span class="text-white fw-semibold">${selectedPaymentMethod.toUpperCase()} Approved</span></p>
                                 </div>
-                            `;
-                            
-                            // Clear cart
-                            localStorage.removeItem('cart');
-                            cart = [];
-                        }, 1500);
-                    } else {
-                        showToast(data.message || 'Failed to authorize order on the server.', 'error');
-                        setTimeout(() => { window.location.reload(); }, 1500);
-                    }
+
+                                <button class="hero-action-btn mt-3" type="button" onclick="window.location.href='index.html'"><i class="fa-solid fa-house me-2"></i>Return to Home</button>
+                            </div>
+                        `;
+                        
+                        // Clear cart
+                        localStorage.removeItem('cart');
+                        cart = [];
+                    }, 1500);
                 } catch (error) {
-                    showToast('Server connection failed. Could not register order.', 'error');
+                    showToast('Could not register order in localStorage.', 'error');
                     setTimeout(() => { window.location.reload(); }, 1500);
                 }
             });

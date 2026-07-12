@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const User = require('../models/User');
+
+// In-memory mock database fallback
+const mockUsers = [];
 
 // Helper to generate JWT token
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: '30d' });
+const generateToken = (email) => {
+    const secret = process.env.JWT_SECRET || 'fallback-secret';
+    return jwt.sign({ id: email }, secret, { expiresIn: '30d' });
 };
 
 // @route   POST /api/auth/register
@@ -19,25 +21,18 @@ router.post('/register', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Please add all registration fields' });
         }
 
-        const userExists = await User.findOne({ email });
+        const userExists = mockUsers.find(u => u.email === email);
         if (userExists) {
             return res.status(400).json({ success: false, message: 'Email address already registered' });
         }
 
-        // Hash the user password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        const user = await User.create({
-            name,
-            email,
-            password: hashedPassword
-        });
+        const user = { name, email, password };
+        mockUsers.push(user);
 
         return res.status(201).json({
             success: true,
-            token: generateToken(user._id),
-            user: { name: user.name, email: user.email }
+            token: generateToken(email),
+            user: { name, email }
         });
     } catch (error) {
         return res.status(500).json({ success: false, message: error.message });
@@ -54,19 +49,14 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ success: false, message: 'Please add login email and password' });
         }
 
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ success: false, message: 'Invalid email or password' });
-        }
-
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
+        const user = mockUsers.find(u => u.email === email);
+        if (!user || user.password !== password) {
             return res.status(400).json({ success: false, message: 'Invalid email or password' });
         }
 
         return res.status(200).json({
             success: true,
-            token: generateToken(user._id),
+            token: generateToken(email),
             user: { name: user.name, email: user.email }
         });
     } catch (error) {

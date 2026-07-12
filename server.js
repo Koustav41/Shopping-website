@@ -2,8 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
-const mongoose = require('mongoose');
-const connectDB = require('./config/db');
 
 // Load environment variables
 dotenv.config();
@@ -14,18 +12,6 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// Ensure MongoDB connection for API requests on Vercel
-app.use(async (req, res, next) => {
-    try {
-        if (mongoose.connection.readyState !== 1) {
-            await connectDB();
-        }
-        next();
-    } catch (error) {
-        next(error);
-    }
-});
 
 // Bind API Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -41,8 +27,7 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-const startServer = async () => {
-    await connectDB();
+const startServer = () => {
     app.listen(PORT, () => {
         console.log(`Server running on port ${PORT}`);
         console.log(`Open http://localhost:${PORT} in your browser`);
@@ -52,8 +37,10 @@ const startServer = async () => {
 if (process.env.VERCEL) {
     module.exports = app;
 } else {
-    startServer().catch(error => {
+    try {
+        startServer();
+    } catch (error) {
         console.error('Server failed to start:', error.message);
         process.exit(1);
-    });
+    }
 }

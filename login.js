@@ -8,28 +8,23 @@ document.addEventListener('DOMContentLoaded', function () {
         const password = document.getElementById('loginPassword').value.trim();
 
         try {
-            const apiUrl = typeof window.getApiUrl === 'function' ? window.getApiUrl('/api/auth/login') : '/api/auth/login';
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password })
-            });
-            const data = await response.json();
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
 
-            if (data.success) {
-                // Save currently logged in user session and JWT token
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('currentUser', JSON.stringify(data.user));
+            if (user) {
+                // Save currently logged in user session and a mock JWT token
+                localStorage.setItem('token', `mock-jwt-token-${email}`);
+                localStorage.setItem('currentUser', JSON.stringify({ name: user.name, email: user.email }));
                 
                 showToast('Login successful! Redirecting...', 'success');
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 1000);
             } else {
-                showToast(data.message || 'Invalid email or password. Please try again.', 'error');
+                showToast('Invalid email or password. Please try again.', 'error');
             }
         } catch (error) {
-            showToast('Server connection failed. Please try again later.', 'error');
+            showToast('Login failed. Please try again.', 'error');
         }
     });
 });
