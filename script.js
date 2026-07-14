@@ -74,9 +74,9 @@ function initAuthNavbar() {
                 <a href="view orders.html" class="nav-link nav-link-custom text-nowrap">
                     <i class="fa-solid fa-receipt me-1 text-cyan"></i> My Orders
                 </a>
-                <span class="nav-link nav-link-custom active text-nowrap" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.25);">
+                <a href="profile.html" class="nav-link nav-link-custom active text-nowrap" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.25);" title="View Profile">
                     <i class="fa-solid fa-circle-user text-emerald me-1"></i> Hi, ${currentUser.name.split(' ')[0]}
-                </span>
+                </a>
                 <a href="#" class="nav-link nav-link-custom text-danger" id="logout-btn-link" title="Logout">
                     <i class="fa-solid fa-sign-out-alt"></i>
                 </a>

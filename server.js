@@ -2,9 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
+const connectDB = require('./config/db');
 
 // Load environment variables
 dotenv.config();
+
+// Connect Database gracefully
+connectDB().catch(err => {
+    console.warn('MongoDB connection failed. Continuing in offline mock fallback mode:', err.message);
+});
 
 const PORT = process.env.PORT || 5000;
 const app = express();

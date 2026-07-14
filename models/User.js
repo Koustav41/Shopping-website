@@ -19,8 +19,24 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, 'Please add a password'],
+        required: false,
         minlength: [6, 'Password must be at least 6 characters']
+    },
+    phone: {
+        type: String,
+        default: ''
+    },
+    address: {
+        type: String,
+        default: ''
+    },
+    picture: {
+        type: String,
+        default: ''
+    },
+    isGoogle: {
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Date,
