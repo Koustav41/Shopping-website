@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +8,21 @@
     <meta name="theme-color" content="#0a0e17">
     <title>Shopping Cart - Your Family Store</title>
     <!-- website icon -->
-    <link rel="website icon" type="jpg" href="https://png.pngtree.com/png-clipart/20240604/original/pngtree-icon-shopping-store-design-for-ecommerce-website-vector-picture-image_15485092.png">
-    
+    <link rel="website icon" type="jpg"
+        href="https://png.pngtree.com/png-clipart/20240604/original/pngtree-icon-shopping-store-design-for-ecommerce-website-vector-picture-image_15485092.png">
+
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+
     <!-- Custom premium styles -->
     <link rel="stylesheet" href="style.css">
-    
+
     <!-- Central theme loader (immediate execution prevents FOUT) -->
     <script src="theme.js"></script>
 </head>
+
 <body>
 
     <!-- Sticky Glass Navbar -->
@@ -61,9 +64,9 @@
     <!-- Cart Layout Grid Container -->
     <div class="container py-5" style="min-height: calc(100vh - 160px);">
         <h2 class="cart-header-title"><i class="fa-solid fa-cart-shopping text-cyan me-3"></i>Your Shopping Cart</h2>
-        
+
         <div class="row g-4" id="cart-dashboard-row">
-            
+
             <!-- Left Side: Cart Items Table -->
             <div class="col-lg-8">
                 <div class="cart-list-container">
@@ -87,7 +90,8 @@
                         <i class="fa-solid fa-cart-flatbed-empty text-dim mb-4" style="font-size: 4rem;"></i>
                         <h4 class="text-muted mb-3">Your cart is currently empty</h4>
                         <p class="text-dim mb-4">Go explore our catalog and grab some premium tech gadgets!</p>
-                        <a href="index.html#products" class="hero-action-btn"><i class="fa-solid fa-shop me-2"></i>Return to Shop</a>
+                        <a href="index.html#products" class="hero-action-btn"><i
+                                class="fa-solid fa-shop me-2"></i>Return to Shop</a>
                     </div>
                 </div>
             </div>
@@ -96,7 +100,7 @@
             <div class="col-lg-4">
                 <div class="cart-summary-card" id="cart-summary-block">
                     <h4 class="cart-summary-title">Order Summary</h4>
-                    
+
                     <div class="summary-row">
                         <span>Subtotal</span>
                         <span id="summary-subtotal">₹0.00</span>
@@ -109,10 +113,11 @@
                         <span>Promo Discount (20%)</span>
                         <span class="text-emerald" id="summary-discount">-₹0.00</span>
                     </div>
-                    
+
                     <!-- Promo Code Block -->
                     <div class="promo-input-group">
-                        <input type="text" class="form-control promo-control" id="promo-code-input" placeholder="Enter coupon code (e.g. SAVE20)">
+                        <input type="text" class="form-control promo-control" id="promo-code-input"
+                            placeholder="Enter coupon code (e.g. SAVE20)">
                         <button class="btn-apply-promo" id="btn-apply-discount" type="button">Apply</button>
                     </div>
                     <div id="promo-status-msg" class="small mb-3 d-none"></div>
@@ -121,7 +126,7 @@
                         <span>Estimated Total</span>
                         <span class="total-price" id="summary-total">₹0.00</span>
                     </div>
-                    
+
                     <button class="cart-checkout-btn mt-4" id="btn-open-checkout" type="button">
                         <i class="fa-solid fa-credit-card me-2"></i>Proceed to Checkout
                     </button>
@@ -135,27 +140,32 @@
     <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content modal-glass-content">
-                
+
                 <div class="modal-glass-header d-flex justify-content-between align-items-center">
-                    <h5 class="modal-glass-title" id="checkoutModalLabel"><i class="fa-solid fa-shield-halved text-cyan me-2"></i>Secure Payment Gateway</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-glass-title" id="checkoutModalLabel"><i
+                            class="fa-solid fa-shield-halved text-cyan me-2"></i>Secure Payment Gateway</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                
+
                 <div class="modal-body p-4" id="checkout-modal-body">
                     <p class="small text-muted mb-4">Select your preferred payment method and complete the purchase.</p>
-                    
+
                     <div class="payment-selector">
-                        <div class="payment-option active" data-method="upi">
-                            <span class="payment-option-dot"></span>
-                            <span class="fw-semibold"><i class="fa-solid fa-mobile-screen-button text-cyan me-2"></i>UPI / QR Code</span>
-                        </div>
                         <div class="payment-option" data-method="card">
                             <span class="payment-option-dot"></span>
-                            <span class="fw-semibold"><i class="fa-solid fa-credit-card text-emerald me-2"></i>Credit / Debit Card</span>
+                            <span class="fw-semibold"><i class="fa-solid fa-credit-card text-emerald me-2"></i>Credit /
+                                Debit Card</span>
                         </div>
                         <div class="payment-option" data-method="net">
                             <span class="payment-option-dot"></span>
-                            <span class="fw-semibold"><i class="fa-solid fa-building-columns text-warning me-2"></i>Net Banking</span>
+                            <span class="fw-semibold"><i class="fa-solid fa-building-columns text-warning me-2"></i>Net
+                                Banking</span>
+                        </div>
+                        <div class="payment-option" data-method="cod">
+                            <span class="payment-option-dot"></span>
+                            <span class="fw-semibold"><i class="fa-solid fa-cash-register text-success me-2"></i>Pay on
+                                Delivery or UPI</span>
                         </div>
                     </div>
 
@@ -163,7 +173,8 @@
                     <div class="payment-details-form" id="upi-details-form">
                         <div class="floating-input-group mt-3">
                             <label class="floating-label">Enter UPI ID</label>
-                            <input type="text" class="form-control auth-input" id="upi-id-input" placeholder="username@upi" value="user@ybl">
+                            <input type="text" class="form-control auth-input" id="upi-id-input"
+                                placeholder="username@upi" value="user@ybl">
                         </div>
                     </div>
 
@@ -193,12 +204,82 @@
                     <div class="payment-details-form d-none" id="net-details-form">
                         <div class="floating-input-group mt-3">
                             <label class="floating-label">Select Bank</label>
-                            <select class="form-select auth-input text-white" style="background-color: var(--bg-base) !important;">
+                            <select class="form-select auth-input text-white"
+                                style="background-color: var(--bg-base) !important;">
                                 <option value="sbi">State Bank of India</option>
                                 <option value="hdfc">HDFC Bank</option>
                                 <option value="icici">ICICI Bank</option>
                                 <option value="axis">Axis Bank</option>
+                                <option value="kotak">Kotak Mahindra Bank</option>
+                                <option value="pnb">Punjab National Bank</option>
+                                <option value="canara">Canara Bank</option>
+                                <option value="bandhan">Bandhan Bank</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <!-- Pay on Delivery Form -->
+                    <div class="payment-details-form d-none" id="cod-details-form">
+                        <label class="small text-muted mt-3 mb-2 d-block">Choose Payment Option on Delivery</label>
+                        <div class="cod-sub-selector mb-3">
+                            <div class="cod-sub-option active" data-submethod="cash">
+                                <span class="payment-option-dot"></span>
+                                <span class="fw-semibold small"><i
+                                        class="fa-solid fa-money-bill-wave text-success me-1"></i>Cash</span>
+                            </div>
+                            <div class="cod-sub-option" data-submethod="upi-verify">
+                                <span class="payment-option-dot"></span>
+                                <span class="fw-semibold small"><i class="fa-solid fa-user-check text-cyan me-1"></i>UPI
+                                    ID</span>
+                            </div>
+                            <div class="cod-sub-option" data-submethod="upi-qr">
+                                <span class="payment-option-dot"></span>
+                                <span class="fw-semibold small"><i class="fa-solid fa-qrcode text-warning me-1"></i>UPI
+                                    QR</span>
+                            </div>
+                        </div>
+
+                        <!-- Cash Sub-Panel -->
+                        <div class="cod-sub-panel" id="cod-panel-cash">
+                            <p
+                                style="color: var(--text-secondary); text-align: center; padding: 1rem 0; margin-bottom: 0;">
+                                <i
+                                    class="fa-solid fa-hand-holding-dollar text-success fs-3 mb-2 d-block animate-pulse"></i>
+                                Pay with physical cash when your premium tech order arrives at your doorstep.
+                            </p>
+                        </div>
+
+                        <!-- UPI Verify Sub-Panel -->
+                        <div class="cod-sub-panel d-none" id="cod-panel-upi-verify">
+                            <div class="floating-input-group mt-2">
+                                <label class="floating-label">Enter UPI ID</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control auth-input" id="cod-upi-id-input"
+                                        placeholder="username@upi" value="user@ybl">
+                                    <button class="btn-verify-action" type="button" id="btn-cod-verify">Verify</button>
+                                </div>
+                            </div>
+                            <div id="cod-upi-verify-status" class="mt-2 text-center small text-muted"></div>
+                        </div>
+
+                        <!-- UPI QR Sub-Panel -->
+                        <div class="cod-sub-panel d-none" id="cod-panel-upi-qr">
+                            <div class="text-center py-2">
+                                <div class="qr-container p-2 bg-white d-inline-block rounded-3 mb-2"
+                                    style="box-shadow: 0 0 15px var(--accent-glow); border: 1px solid rgba(255,255,255,0.1);">
+                                    <img src="" id="cod-qr-img" alt="UPI QR Code"
+                                        style="width: 130px; height: 130px; display: block; border-radius: 4px;">
+                                </div>
+                                <p class="small text-muted mb-0">Scan and pay using any UPI app (GPay, PhonePe,
+                                    Paytm)</p>
+                                <div class="mt-2">
+                                    <span class="badge bg-secondary animate-pulse"
+                                        style="background-color: rgba(255, 255, 255, 0.05) !important; border: 1px solid var(--border-color);"
+                                        id="cod-qr-status">
+                                        <i class="fa-solid fa-spinner fa-spin me-1"></i>Waiting for scan...
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -215,13 +296,15 @@
 
     <footer class="footer-custom py-5 mt-auto">
         <div class="container text-center small text-muted">
-            &copy; 2026 Your Family Store (Khardaha Branch). All Rights Reserved. Secure SSL Payment Hub. | <a href="admin-login.html" class="text-cyan text-decoration-none ms-1"><i class="fa-solid fa-lock me-1"></i>Admin Portal</a>
+            &copy; 2026 Your Family Store (Khardaha Branch). All Rights Reserved. Secure SSL Payment Hub. | <a
+                href="admin-login.html" class="text-cyan text-decoration-none ms-1"><i
+                    class="fa-solid fa-lock me-1"></i>Admin Portal</a>
         </div>
     </footer>
 
     <!-- Bootstrap Bundle with Popper JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Cart engine handler logic -->
     <script>
         // Load cart items from LocalStorage
@@ -229,6 +312,9 @@
         let promoApplied = false;
         const discountRate = 0.20; // 20% discount
         let selectedPaymentMethod = 'upi';
+        let codSubMethod = 'cash';
+        let codUpiVerified = false;
+        let codUpiId = '';
 
         document.addEventListener('DOMContentLoaded', function () {
             renderCart();
@@ -245,7 +331,7 @@
 
             const toast = document.createElement('div');
             toast.className = 'custom-toast';
-            
+
             let iconClass = 'fa-check-circle';
             if (type === 'error') {
                 iconClass = 'fa-exclamation-circle';
@@ -261,7 +347,7 @@
             `;
 
             toastContainer.appendChild(toast);
-            
+
             setTimeout(() => {
                 toast.classList.add('show');
             }, 50);
@@ -280,9 +366,9 @@
             const emptyState = document.getElementById('cart-empty-state');
             const cartTable = document.getElementById('cart-elements-table');
             const summaryBlock = document.getElementById('cart-summary-block');
-            
+
             tbody.innerHTML = '';
-            
+
             if (cart.length === 0) {
                 cartTable.classList.add('d-none');
                 emptyState.classList.remove('d-none');
@@ -335,7 +421,7 @@
         }
 
         // 3. Increment/Decrement Cart Quantities
-        window.adjustQty = function(index, delta) {
+        window.adjustQty = function (index, delta) {
             cart[index].quantity += delta;
             if (cart[index].quantity <= 0) {
                 cart.splice(index, 1);
@@ -345,7 +431,7 @@
         }
 
         // 4. Remove Line Item
-        window.removeItem = function(index) {
+        window.removeItem = function (index) {
             const title = cart[index].title;
             cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -387,9 +473,9 @@
             const promoInput = document.getElementById('promo-code-input');
             const promoStatus = document.getElementById('promo-status-msg');
 
-            applyBtn.addEventListener('click', function() {
+            applyBtn.addEventListener('click', function () {
                 const code = promoInput.value.trim().toUpperCase();
-                
+
                 if (code === 'SAVE20') {
                     promoApplied = true;
                     promoStatus.classList.remove('d-none', 'text-danger');
@@ -416,7 +502,7 @@
             const openCheckoutBtn = document.getElementById('btn-open-checkout');
             const completeOrderBtn = document.getElementById('btn-complete-order');
 
-            openCheckoutBtn.addEventListener('click', function() {
+            openCheckoutBtn.addEventListener('click', function () {
                 // Ensure user is logged in
                 const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
                 if (!currentUser) {
@@ -426,30 +512,156 @@
                     }, 1200);
                     return;
                 }
+
+                // Reset COD verification state
+                codSubMethod = 'cash';
+                codUpiVerified = false;
+                codUpiId = '';
+
+                // Reset UI to Cash active
+                const codSubOptions = document.querySelectorAll('.cod-sub-option');
+                codSubOptions.forEach(o => o.classList.remove('active'));
+                const cashOpt = document.querySelector('[data-submethod="cash"]');
+                if (cashOpt) cashOpt.classList.add('active');
+
+                document.querySelectorAll('.cod-sub-panel').forEach(p => p.classList.add('d-none'));
+                const cashPanel = document.getElementById('cod-panel-cash');
+                if (cashPanel) cashPanel.classList.remove('d-none');
+
+                const upiInput = document.getElementById('cod-upi-id-input');
+                if (upiInput) upiInput.value = 'user@ybl';
+                const statusDiv = document.getElementById('cod-upi-verify-status');
+                if (statusDiv) statusDiv.innerHTML = '';
+
                 checkoutModal.show();
             });
 
             // Handle payment options switches
             const paymentOptions = document.querySelectorAll('.payment-option');
             paymentOptions.forEach(opt => {
-                opt.addEventListener('click', function() {
+                opt.addEventListener('click', function () {
                     paymentOptions.forEach(o => o.classList.remove('active'));
                     this.classList.add('active');
 
                     selectedPaymentMethod = this.getAttribute('data-method');
-                    
+
                     // Hide all details forms
                     document.querySelectorAll('.payment-details-form').forEach(f => f.classList.add('d-none'));
-                    
+
                     // Show target details form
                     document.getElementById(`${selectedPaymentMethod}-details-form`).classList.remove('d-none');
                 });
             });
 
+            // Handle COD sub-option switches
+            const codSubOptions = document.querySelectorAll('.cod-sub-option');
+            codSubOptions.forEach(opt => {
+                opt.addEventListener('click', function () {
+                    codSubOptions.forEach(o => o.classList.remove('active'));
+                    this.classList.add('active');
+
+                    codSubMethod = this.getAttribute('data-submethod');
+
+                    // Hide all sub-panels
+                    document.querySelectorAll('.cod-sub-panel').forEach(p => p.classList.add('d-none'));
+
+                    // Show target sub-panel
+                    const targetPanelId = `cod-panel-${codSubMethod}`;
+                    document.getElementById(targetPanelId).classList.remove('d-none');
+
+                    // If QR is selected, update QR code image dynamically
+                    if (codSubMethod === 'upi-qr') {
+                        updateCodQrCode();
+                    }
+                });
+            });
+
+            // Update QR code helper
+            function updateCodQrCode() {
+                let subtotalVal = cart.reduce((tot, item) => tot + item.price * item.quantity, 0);
+                let shippingVal = (subtotalVal >= 10000) ? 0 : 150;
+                let discountVal = promoApplied ? subtotalVal * discountRate : 0;
+                let totalVal = subtotalVal + shippingVal - discountVal;
+
+                const qrImg = document.getElementById('cod-qr-img');
+                if (qrImg) {
+                    const payeeAddress = 'mkoustav03@okicici';
+                    const payeeName = 'FamilyTechStore';
+                    const upiUrl = `upi://pay?pa=${payeeAddress}&pn=${payeeName}&am=${totalVal.toFixed(2)}&cu=INR`;
+                    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(upiUrl)}`;
+                }
+
+                // Simulate scanning process
+                const scanStatus = document.getElementById('cod-qr-status');
+                if (scanStatus) {
+                    scanStatus.className = 'badge bg-secondary animate-pulse';
+                    scanStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-1"></i>Waiting for scan...';
+
+                    // After 5s, simulate scan confirmation
+                    setTimeout(() => {
+                        if (codSubMethod === 'upi-qr' && selectedPaymentMethod === 'cod') {
+                            scanStatus.className = 'badge bg-success';
+                            scanStatus.innerHTML = '<i class="fa-solid fa-check me-1"></i>QR Code Scanned Successfully';
+                            showToast('QR Code scanned! Proceed to complete order.', 'success');
+                        }
+                    }, 5000);
+                }
+            }
+
+            // Handle UPI Verification click
+            const btnCodVerify = document.getElementById('btn-cod-verify');
+            const codUpiInput = document.getElementById('cod-upi-id-input');
+            const codUpiVerifyStatus = document.getElementById('cod-upi-verify-status');
+
+            if (btnCodVerify && codUpiInput && codUpiVerifyStatus) {
+                btnCodVerify.addEventListener('click', function () {
+                    const upiId = codUpiInput.value.trim();
+                    const upiRegex = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+
+                    if (!upiId) {
+                        codUpiVerifyStatus.className = 'mt-2 text-center small text-danger';
+                        codUpiVerifyStatus.innerText = 'Please enter a UPI ID.';
+                        return;
+                    }
+
+                    if (!upiRegex.test(upiId)) {
+                        codUpiVerifyStatus.className = 'mt-2 text-center small text-danger';
+                        codUpiVerifyStatus.innerText = 'Invalid UPI ID format (e.g., user@upi, user@okaxis, user@okicici, user@ybl).';
+                        return;
+                    }
+
+                    // Simulate verification flow
+                    btnCodVerify.disabled = true;
+                    btnCodVerify.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                    codUpiVerifyStatus.className = 'mt-2 text-center small text-info animate-pulse';
+                    codUpiVerifyStatus.innerText = 'Validating payment handle...';
+
+                    setTimeout(() => {
+                        btnCodVerify.disabled = false;
+                        btnCodVerify.innerHTML = 'Verify';
+
+                        // Simple mock success
+                        codUpiVerified = true;
+                        codUpiId = upiId;
+                        codUpiVerifyStatus.className = 'mt-2 text-center small text-success';
+                        codUpiVerifyStatus.innerHTML = `<i class="fa-solid fa-circle-check me-1"></i>Verified: <strong>${upiId.split('@')[0].toUpperCase()}</strong> ✅`;
+                        showToast('UPI ID verified successfully!', 'success');
+                    }, 1500);
+                });
+            }
+
             // Complete Purchase Click
-            completeOrderBtn.addEventListener('click', async function() {
+            completeOrderBtn.addEventListener('click', async function () {
+                // If COD - check validation
+                if (selectedPaymentMethod === 'cod') {
+                    if (codSubMethod === 'upi-verify' && !codUpiVerified) {
+                        showToast('Please enter and verify your UPI ID first.', 'error');
+                        return;
+                    }
+                }
+
                 const body = document.getElementById('checkout-modal-body');
-                
+
                 // Show secure loader
                 body.innerHTML = `
                     <div class="text-center py-5">
@@ -468,13 +680,25 @@
                 let totalVal = subtotalVal + shippingVal - discountVal;
                 let orderIdVal = `YG-${Math.floor(100000 + Math.random() * 900000)}`;
                 const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+
+                let orderPaymentStr = selectedPaymentMethod;
+                if (selectedPaymentMethod === 'cod') {
+                    if (codSubMethod === 'cash') {
+                        orderPaymentStr = 'COD (Cash)';
+                    } else if (codSubMethod === 'upi-verify') {
+                        orderPaymentStr = `COD (UPI: ${codUpiId})`;
+                    } else if (codSubMethod === 'upi-qr') {
+                        orderPaymentStr = 'COD (UPI QR Code)';
+                    }
+                }
+
                 const orderPayload = {
                     items: cart,
                     subtotal: subtotalVal,
                     shippingCost: shippingVal,
                     discount: discountVal,
                     total: totalVal,
-                    paymentMethod: selectedPaymentMethod,
+                    paymentMethod: orderPaymentStr,
                     orderId: orderIdVal,
                     userEmail: currentUser ? currentUser.email : 'guest@example.com',
                     date: new Date().toISOString()
@@ -497,13 +721,13 @@
                                     <h6 class="text-cyan fw-bold mb-3"><i class="fa-solid fa-receipt me-2"></i>Invoice Details</h6>
                                     <p class="small mb-1 text-muted">Order ID: <span class="text-white fw-semibold">#${orderIdVal}</span></p>
                                     <p class="small mb-1 text-muted">Delivery Address: <span class="text-white fw-semibold">Khardaha, West Bengal</span></p>
-                                    <p class="small mb-1 text-muted">Payment: <span class="text-white fw-semibold">${selectedPaymentMethod.toUpperCase()} Approved</span></p>
+                                    <p class="small mb-1 text-muted">Payment: <span class="text-white fw-semibold">${orderPaymentStr.toUpperCase()} Approved</span></p>
                                 </div>
 
                                 <button class="hero-action-btn mt-3" type="button" onclick="window.location.href='index.html'"><i class="fa-solid fa-house me-2"></i>Return to Home</button>
                             </div>
                         `;
-                        
+
                         // Clear cart
                         localStorage.removeItem('cart');
                         cart = [];
@@ -537,7 +761,7 @@
                     </div>
                 `;
 
-                document.getElementById('logout-btn-link').addEventListener('click', function(e) {
+                document.getElementById('logout-btn-link').addEventListener('click', function (e) {
                     e.preventDefault();
                     localStorage.removeItem('currentUser');
                     showToast('You have successfully logged out.', 'info');
@@ -560,7 +784,7 @@
             if (!badge) return;
             const count = cart.reduce((total, item) => total + item.quantity, 0);
             badge.innerText = count;
-            
+
             // Pop animation on update
             badge.style.transform = 'scale(1.3)';
             setTimeout(() => {
@@ -569,4 +793,5 @@
         }
     </script>
 </body>
+
 </html>
