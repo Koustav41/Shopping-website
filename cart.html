@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#0a0e17">
     <title>Shopping Cart - Your Family Store</title>
     <!-- website icon -->
     <link rel="website icon" type="jpg" href="https://png.pngtree.com/png-clipart/20240604/original/pngtree-icon-shopping-store-design-for-ecommerce-website-vector-picture-image_15485092.png">
@@ -26,20 +28,30 @@
             <a class="brand-logo" href="index.html">
                 <i class="fa-solid fa-laptop-code"></i> Your Family Store
             </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
                         <a class="nav-link nav-link-custom" href="index.html#products">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-custom active" href="cart.html">
+                        <a class="nav-link nav-link-custom active cart-badge-container" href="cart.html">
                             <i class="fa-solid fa-shopping-cart me-1"></i> Cart
+                            <span class="cart-count-badge" id="cart-badge-count">0</span>
                         </a>
                     </li>
                     <li>
                         <button id="theme-toggle" class="theme-btn" type="button" aria-label="Toggle theme">
                             <i class="fas fa-sun"></i>
                         </button>
+                    </li>
+                    <li class="nav-item ms-lg-2" id="nav-auth-section">
+                        <a class="nav-link nav-link-custom" href="login.html">
+                            <i class="fa-solid fa-user me-1"></i> Login
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -203,7 +215,7 @@
 
     <footer class="footer-custom py-5 mt-auto">
         <div class="container text-center small text-muted">
-            &copy; 2026 Your Family Store (Khardaha Branch). All Rights Reserved. Secure SSL Payment Hub.
+            &copy; 2026 Your Family Store (Khardaha Branch). All Rights Reserved. Secure SSL Payment Hub. | <a href="admin-login.html" class="text-cyan text-decoration-none ms-1"><i class="fa-solid fa-lock me-1"></i>Admin Portal</a>
         </div>
     </footer>
 
@@ -222,6 +234,8 @@
             renderCart();
             initPromoCode();
             initCheckoutFlow();
+            initAuthNavbar();
+            updateCartCountBadge();
         });
 
         // 1. Show custom premium notifications
@@ -317,6 +331,7 @@
             });
 
             recalculateSummary(subtotal);
+            updateCartCountBadge();
         }
 
         // 3. Increment/Decrement Cart Quantities
@@ -498,6 +513,59 @@
                     setTimeout(() => { window.location.reload(); }, 1500);
                 }
             });
+        }
+
+        // Setup Authenticated Navbar (Displays current user)
+        function initAuthNavbar() {
+            const authSection = document.getElementById('nav-auth-section');
+            if (!authSection) return;
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+
+            if (currentUser) {
+                authSection.innerHTML = `
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <a href="view orders.html" class="nav-link nav-link-custom text-nowrap">
+                            <i class="fa-solid fa-receipt me-1 text-cyan"></i> My Orders
+                        </a>
+                        <span class="nav-link nav-link-custom active text-nowrap" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.25);">
+                            <i class="fa-solid fa-circle-user text-emerald me-1"></i> Hi, ${currentUser.name.split(' ')[0]}
+                        </span>
+                        <a href="#" class="nav-link nav-link-custom text-danger" id="logout-btn-link" title="Logout">
+                            <i class="fa-solid fa-sign-out-alt"></i>
+                        </a>
+                    </div>
+                `;
+
+                document.getElementById('logout-btn-link').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('currentUser');
+                    showToast('You have successfully logged out.', 'info');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                });
+            } else {
+                authSection.innerHTML = `
+                    <a class="nav-link nav-link-custom" href="login.html">
+                        <i class="fa-solid fa-user me-1"></i> Login
+                    </a>
+                `;
+            }
+        }
+
+        // Update Navbar Cart Count Badge
+        function updateCartCountBadge() {
+            const badge = document.getElementById('cart-badge-count');
+            if (!badge) return;
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            badge.innerText = count;
+            
+            // Pop animation on update
+            badge.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                badge.style.transform = 'scale(1)';
+            }, 200);
         }
     </script>
 </body>

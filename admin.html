@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#0a0e17">
+    <title>Admin Dashboard - Tech World</title>
+    <!-- website icon -->
+    <link rel="website icon" type="jpg" href="https://png.pngtree.com/png-clipart/20240604/original/pngtree-icon-shopping-store-design-for-ecommerce-website-vector-picture-image_15485092.png">
+    
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom premium styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Central theme loader (immediate execution prevents FOUT) -->
+    <script src="theme.js"></script>
+
+    <style>
+        /* Admin dashboard specific styling overrides */
+        .dashboard-container {
+            margin-top: 40px;
+            margin-bottom: 60px;
+        }
+
+        .admin-card-stat {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-md), var(--glass-shadow);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .admin-card-stat:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 25px rgba(6, 182, 212, 0.12);
+        }
+
+        .admin-stat-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            border: 1px solid rgba(6, 182, 212, 0.2);
+        }
+
+        .stat-icon-emerald {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-emerald);
+            border-color: rgba(16, 185, 129, 0.2);
+        }
+
+        .stat-icon-danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-danger);
+            border-color: rgba(239, 68, 68, 0.2);
+        }
+
+        .stat-icon-warning {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border-color: rgba(245, 158, 11, 0.2);
+        }
+
+        .admin-stat-info h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+            color: var(--text-primary);
+            font-family: var(--font-heading);
+        }
+
+        .admin-stat-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Glass Admin Tabs */
+        .admin-nav-tabs {
+            border: none;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 8px;
+        }
+
+        .admin-nav-link {
+            border: 1px solid transparent !important;
+            border-radius: 12px !important;
+            color: var(--text-muted) !important;
+            background: transparent !important;
+            padding: 12px 24px !important;
+            font-weight: 600;
+            font-family: var(--font-heading);
+            transition: var(--transition-smooth) !important;
+        }
+
+        .admin-nav-link:hover {
+            color: var(--text-primary) !important;
+            background: var(--bg-tab) !important;
+            border-color: var(--border-color) !important;
+        }
+
+        .admin-nav-link.active {
+            color: #0a0e17 !important;
+            background: var(--accent-cyan) !important;
+            border-color: var(--accent-cyan) !important;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        html.light-theme .admin-nav-link.active {
+            color: #ffffff !important;
+        }
+
+        /* Admin Table Styles */
+        .admin-table-container {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--shadow-md), var(--glass-shadow);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+        }
+
+        .admin-table {
+            color: var(--text-primary) !important;
+            margin-bottom: 0;
+            vertical-align: middle;
+        }
+
+        .admin-table th {
+            font-family: var(--font-heading);
+            color: var(--text-muted);
+            font-weight: 600;
+            border-bottom-width: 2px;
+            border-color: var(--border-color);
+            padding: 16px 12px;
+        }
+
+        .admin-table td {
+            border-color: var(--border-color);
+            padding: 16px 12px;
+        }
+
+        .product-admin-thumb {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Glass Form Control */
+        .admin-form-control, .admin-form-select {
+            background-color: var(--bg-input) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+            border-radius: 10px !important;
+            padding: 10px 14px !important;
+            transition: var(--transition-smooth) !important;
+        }
+
+        .admin-form-control:focus, .admin-form-select:focus {
+            border-color: var(--accent-cyan) !important;
+            box-shadow: 0 0 10px var(--accent-glow) !important;
+            outline: none !important;
+        }
+
+        /* Glass Modal customization */
+        .modal-glass-content {
+            background: var(--bg-modal) !important;
+            border: 1px solid var(--border-color) !important;
+            border-radius: 24px !important;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            box-shadow: var(--shadow-lg), var(--glass-shadow);
+            color: var(--text-primary);
+        }
+
+        .modal-glass-header {
+            border-bottom: 1px solid var(--border-color) !important;
+            padding: 24px 30px 16px 30px !important;
+        }
+
+        .modal-glass-footer {
+            border-top: 1px solid var(--border-color) !important;
+            padding: 16px 30px 24px 30px !important;
+        }
+
+        .modal-glass-body {
+            padding: 30px !important;
+        }
+
+        /* Dropdown status coloring */
+        .status-dropdown {
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            background: var(--bg-input);
+            color: var(--text-primary);
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition-smooth);
+        }
+
+        .status-dropdown:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        .status-opt-processing { color: #f59e0b; }
+        .status-opt-shipped { color: var(--accent-cyan); }
+        .status-opt-delivered { color: var(--accent-emerald); }
+
+        /* General dashboard styling */
+        .admin-btn {
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
+        }
+
+        .admin-btn-primary {
+            background: var(--accent-cyan);
+            color: #0a0e17;
+            box-shadow: 0 4px 10px var(--accent-glow);
+        }
+
+        .admin-btn-primary:hover {
+            background: #0891b2;
+            color: #0a0e17;
+            transform: scale(1.03);
+        }
+
+        .admin-btn-secondary {
+            background: transparent;
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .admin-btn-secondary:hover {
+            background: var(--bg-surface-hover);
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+        }
+
+        .admin-btn-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: var(--accent-danger);
+        }
+
+        .admin-btn-danger:hover {
+            background: var(--accent-danger);
+            color: #ffffff;
+            transform: scale(1.03);
+        }
+
+        /* Order items inline format */
+        .order-badge-item {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body class="auth-bg">
+
+    <!-- Sticky Glass Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+        <div class="container">
+            <a class="brand-logo" href="index.html">
+                <i class="fa-solid fa-laptop-code text-cyan"></i> Tech World Admin
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-custom" href="index.html">
+                            <i class="fa-solid fa-shop me-1"></i> Storefront
+                        </a>
+                    </li>
+                    <li>
+                        <button id="theme-toggle" class="theme-btn" type="button" aria-label="Toggle theme">
+                            <i class="fas fa-sun"></i>
+                        </button>
+                    </li>
+                    <li class="nav-item ms-lg-2" id="admin-auth-section">
+                        <!-- Populated by JS -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Area -->
+    <div class="container dashboard-container">
+        
+        <!-- Header welcome Section -->
+        <div class="row align-items-center mb-5">
+            <div class="col-md-6 text-start">
+                <h1 class="fw-extrabold text-white" style="font-family: var(--font-heading); font-size: 2.3rem;">Management Vault</h1>
+                <p class="text-muted mb-0">Control inventory catalog, verify customer transactions, and review feedback submissions.</p>
+            </div>
+            <div class="col-md-6 text-end mt-3 mt-md-0">
+                <button class="admin-btn admin-btn-secondary" id="reset-default-btn">
+                    <i class="fa-solid fa-rotate-left"></i> Reset Store Products
+                </button>
+            </div>
+        </div>
+
+        <!-- Metric Cards Grid -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-5">
+            <div class="col">
+                <div class="admin-card-stat">
+                    <div class="admin-stat-icon stat-icon-emerald">
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                    </div>
+                    <div class="admin-stat-info">
+                        <h3 id="stat-revenue">₹0.00</h3>
+                        <p>Total Revenue</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="admin-card-stat">
+                    <div class="admin-stat-icon">
+                        <i class="fa-solid fa-truck-ramp-box"></i>
+                    </div>
+                    <div class="admin-stat-info">
+                        <h3 id="stat-orders">0</h3>
+                        <p>Orders Placed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="admin-card-stat">
+                    <div class="admin-stat-icon stat-icon-warning">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                    </div>
+                    <div class="admin-stat-info">
+                        <h3 id="stat-products">0</h3>
+                        <p>Active Gadgets</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="admin-card-stat">
+                    <div class="admin-stat-icon stat-icon-danger">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <div class="admin-stat-info">
+                        <h3 id="stat-feedbacks">0</h3>
+                        <p>Customer Feedbacks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Navigation Tabs -->
+        <ul class="nav nav-tabs admin-nav-tabs" id="adminDashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link admin-nav-link active" id="products-tab" data-bs-toggle="tab" data-bs-target="#products-content" type="button" role="tab" aria-controls="products" aria-selected="true">
+                    <i class="fa-solid fa-laptop-code me-2"></i>Manage Catalog
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link admin-nav-link" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders-content" type="button" role="tab" aria-controls="orders" aria-selected="false">
+                    <i class="fa-solid fa-receipt me-2"></i>Verify Orders
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link admin-nav-link" id="feedbacks-tab" data-bs-toggle="tab" data-bs-target="#feedbacks-content" type="button" role="tab" aria-controls="feedbacks" aria-selected="false">
+                    <i class="fa-solid fa-bullhorn me-2"></i>Complaints/Feedbacks
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tabs Content Panels -->
+        <div class="tab-content" id="adminDashboardTabsContent">
+            
+            <!-- Products Panel -->
+            <div class="tab-pane fade show active" id="products-content" role="tabpanel" aria-labelledby="products-tab">
+                <div class="admin-table-container">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-6 text-start">
+                            <h4 class="fw-bold text-white mb-0" style="font-family: var(--font-heading);"><i class="fa-solid fa-tag text-cyan me-2"></i>Inventory Catalog</h4>
+                        </div>
+                        <div class="col-md-6 text-end mt-2 mt-md-0 d-flex gap-2 justify-content-end">
+                            <input type="text" class="form-control admin-form-control w-50" id="product-search" placeholder="Search product title...">
+                            <button class="admin-btn admin-btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" onclick="openAddProductModal()">
+                                <i class="fa-solid fa-plus"></i> Add Product
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table admin-table text-start">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock Count</th>
+                                    <th>Status</th>
+                                    <th>Badge</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-products-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Orders Panel -->
+            <div class="tab-pane fade" id="orders-content" role="tabpanel" aria-labelledby="orders-tab">
+                <div class="admin-table-container">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-md-6 text-start">
+                            <h4 class="fw-bold text-white mb-0" style="font-family: var(--font-heading);"><i class="fa-solid fa-cash-register text-cyan me-2"></i>Customer Purchases</h4>
+                        </div>
+                        <div class="col-md-6 text-end mt-2 mt-md-0">
+                            <input type="text" class="form-control admin-form-control w-50 ms-auto" id="order-search" placeholder="Search User email or Order ID...">
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table admin-table text-start">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer Email</th>
+                                    <th>Date Placed</th>
+                                    <th>Ordered Items</th>
+                                    <th>Total Charge</th>
+                                    <th>Payment</th>
+                                    <th>Delivery Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-orders-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedbacks Panel -->
+            <div class="tab-pane fade" id="feedbacks-content" role="tabpanel" aria-labelledby="feedbacks-tab">
+                <div class="admin-table-container">
+                    <div class="row align-items-center mb-4">
+                        <div class="col-12 text-start">
+                            <h4 class="fw-bold text-white mb-0" style="font-family: var(--font-heading);"><i class="fa-solid fa-headset text-cyan me-2"></i>Logged Feedback Submissions</h4>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table admin-table text-start">
+                            <thead>
+                                <tr>
+                                    <th>Date Logged</th>
+                                    <th>Customer Name</th>
+                                    <th>Customer Email</th>
+                                    <th>Feedback Scope</th>
+                                    <th class="text-end">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-feedbacks-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content modal-glass-content">
+                <div class="modal-header modal-glass-header d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title fw-bold text-white" id="productModalLabel" style="font-family: var(--font-heading);">Add Product Item</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form id="product-form">
+                    <div class="modal-body modal-glass-body text-start">
+                        <input type="hidden" id="edit-product-index">
+                        
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label for="prodTitle" class="form-label text-white small fw-bold">Product Title</label>
+                                <input type="text" class="form-control admin-form-control" id="prodTitle" placeholder="e.g. Mechanical RGB Keyboard" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="prodCategory" class="form-label text-white small fw-bold">Category</label>
+                                <select class="form-select admin-form-select text-white" id="prodCategory" required>
+                                    <option value="Audio">Audio</option>
+                                    <option value="Storage">Storage</option>
+                                    <option value="Wearables">Wearables</option>
+                                    <option value="Smart Devices">Smart Devices</option>
+                                    <option value="Computers & Gaming">Hardware & Gaming</option>
+                                    <option value="Cameras & Phones">Phones & Cameras</option>
+                                    <option value="Accessories">Accessories</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="prodPrice" class="form-label text-white small fw-bold">Price (₹)</label>
+                                <input type="number" step="0.01" class="form-control admin-form-control" id="prodPrice" placeholder="e.g. 5000.00" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="prodOriginalPrice" class="form-label text-white small fw-bold">Original Price (₹ - Optional)</label>
+                                <input type="number" step="0.01" class="form-control admin-form-control" id="prodOriginalPrice" placeholder="e.g. 6250.00">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="prodStockCount" class="form-label text-white small fw-bold">Stock Quantity</label>
+                                <input type="number" class="form-control admin-form-control" id="prodStockCount" placeholder="e.g. 10" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="prodStockStatus" class="form-label text-white small fw-bold">Stock Status</label>
+                                <select class="form-select admin-form-select text-white" id="prodStockStatus" required>
+                                    <option value="instock">In Stock</option>
+                                    <option value="low">Low Stock</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="prodImage" class="form-label text-white small fw-bold">Image URL</label>
+                                <input type="url" class="form-control admin-form-control" id="prodImage" placeholder="https://images.unsplash.com/..." required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="prodBadge" class="form-label text-white small fw-bold">Badge (Optional)</label>
+                                <input type="text" class="form-control admin-form-control" id="prodBadge" placeholder="e.g. New, Hot, 20% Off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-glass-footer d-flex justify-content-end gap-2">
+                        <button type="button" class="admin-btn admin-btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="admin-btn admin-btn-primary" id="save-product-btn">Save Gadget</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sleek Custom Toast Container -->
+    <div class="custom-toast-container" id="toast-alerts-box"></div>
+
+    <footer class="footer-custom py-5 mt-auto">
+        <div class="container text-center small text-muted">
+            &copy; 2026 Your Family Store. SECURE ADMINISTRATOR CONTROL DECK.
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Dashboard Logic Script -->
+    <script>
+        // Default Catalog Fallback (Matching seed.js / script.js)
+        const DEFAULT_CATALOG = [
+            {
+                title: "Premium Wired headphones",
+                price: 99.99,
+                originalPrice: 124.99,
+                category: "Audio",
+                stockCount: 12,
+                stockStatus: "low",
+                image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=800",
+                badge: "20% Off"
+            },
+            {
+                title: "Ultra Speed Pendrives (128GB)",
+                price: 199.99,
+                category: "Storage",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?q=80&w=800",
+                badge: "New"
+            },
+            {
+                title: "Bluetooth Wireless Earphone",
+                price: 500.99,
+                originalPrice: 625.99,
+                category: "Audio",
+                stockCount: 3,
+                stockStatus: "low",
+                image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=800",
+                badge: "Hot"
+            },
+            {
+                title: "Ultra Low-Latency Gaming Tws",
+                price: 900.99,
+                category: "Audio",
+                stockStatus: "instock",
+                image: "image/Gemini_Generated_Image_p3ejslp3ejslp3ej.png",
+                badge: "New"
+            },
+            {
+                title: "Wireless ANC Over-Ear Headphone",
+                price: 1000.99,
+                originalPrice: 1250.00,
+                category: "Audio",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800",
+                badge: "Offer"
+            },
+            {
+                title: "AMOLED Display Smart Watch",
+                price: 1200.99,
+                category: "Wearables",
+                stockCount: 4,
+                stockStatus: "low",
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800",
+                badge: "Hot"
+            },
+            {
+                title: "GPS Quadcopter Camera Drone",
+                price: 7000.99,
+                originalPrice: 8750.00,
+                category: "Smart Devices",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?q=80&w=800",
+                badge: "New"
+            },
+            {
+                title: "Mechanical RGB Gaming Keyboard",
+                price: 5000.99,
+                category: "Computers & Gaming",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800",
+                badge: "Offer"
+            },
+            {
+                title: "Surround Sound Home Theatre",
+                price: 20000.99,
+                category: "Audio",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=800",
+                badge: "New"
+            },
+            {
+                title: "RGB Wireless Gaming Mouse",
+                price: 2000.99,
+                category: "Computers & Gaming",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800",
+                badge: "Hot"
+            },
+            {
+                title: "Ergonomic Wired Mouse",
+                price: 200.99,
+                category: "Computers & Gaming",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=800"
+            },
+            {
+                title: "FHD Frameless IPS Monitor",
+                price: 13000.00,
+                originalPrice: 16250.00,
+                category: "Computers & Gaming",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=800",
+                badge: "Offer"
+            },
+            {
+                title: "Graphic Card (8GB VRAM)",
+                price: 45000.98,
+                category: "Computers & Gaming",
+                stockCount: 2,
+                stockStatus: "low",
+                image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=800",
+                badge: "Hot"
+            },
+            {
+                title: "ARGB Tempered Glass Cabinet",
+                price: 8000.99,
+                category: "Computers & Gaming",
+                stockStatus: "instock",
+                image: "https://zebronics.com/cdn/shop/files/ZEB-Phantom-pic2.jpg?v=1696845618&width=1200"
+            },
+            {
+                title: "Wireless Bluetooth Mic System",
+                price: 13500.99,
+                category: "Audio",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800",
+                badge: "New"
+            },
+            {
+                title: "Professional DSLR Digital Camera",
+                price: 70000.99,
+                originalPrice: 87500.00,
+                category: "Cameras & Phones",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800",
+                badge: "Offer"
+            },
+            {
+                title: "OnePlus Nord CE 4 5G",
+                price: 30000.78,
+                category: "Cameras & Phones",
+                stockStatus: "instock",
+                image: "https://image01-in.oneplus.net/ebp/202404/07/1-M00-52-A5-CpgM7mYR-yOAN0suAAH06ke98vE178.png"
+            },
+            {
+                title: "Samsung S22 5G (128GB)",
+                price: 29000.99,
+                originalPrice: 38600.00,
+                category: "Cameras & Phones",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=800",
+                badge: "25% Off"
+            },
+            {
+                title: "Realme 12 Pro+ 5G",
+                price: 32000.99,
+                category: "Cameras & Phones",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=800"
+            },
+            {
+                title: "Apple iPhone 16",
+                price: 78000.99,
+                category: "Cameras & Phones",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=800",
+                badge: "New"
+            },
+            {
+                title: "Apple iPhone 16 Pro Max",
+                price: 150000.00,
+                category: "Cameras & Phones",
+                stockCount: 1,
+                stockStatus: "low",
+                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800",
+                badge: "Hot"
+            },
+            {
+                title: "iPhone 16 Glass Protective Cover",
+                price: 350.00,
+                category: "Accessories",
+                stockStatus: "instock",
+                image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=800"
+            }
+        ];
+
+        // Access Control Verification
+        const currentAdmin = JSON.parse(localStorage.getItem('currentAdmin') || 'null');
+        if (!currentAdmin) {
+            window.location.href = 'admin-login.html';
+        }
+
+        // Initialize Variables
+        let products = JSON.parse(localStorage.getItem('products') || 'null');
+        if (!products) {
+            products = DEFAULT_CATALOG;
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+
+        let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+        let feedbacks = JSON.parse(localStorage.getItem('feedbacks') || '[]');
+
+        let productModalBootstrap;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            productModalBootstrap = new bootstrap.Modal(document.getElementById('productModal'));
+            
+            // Set welcome credentials
+            initAdminNavbar();
+            
+            // Render Stats & Tables
+            renderStatsDashboard();
+            renderProductsList(products);
+            renderOrdersList(orders);
+            renderFeedbacksList(feedbacks);
+
+            // Register Search Filters
+            document.getElementById('product-search').addEventListener('input', function(e) {
+                const term = e.target.value.toLowerCase().trim();
+                const filtered = products.filter(p => p.title.toLowerCase().includes(term));
+                renderProductsList(filtered);
+            });
+
+            document.getElementById('order-search').addEventListener('input', function(e) {
+                const term = e.target.value.toLowerCase().trim();
+                const filtered = orders.filter(o => o.orderId.toLowerCase().includes(term) || o.userEmail.toLowerCase().includes(term));
+                renderOrdersList(filtered);
+            });
+
+            // Register Product Form Submission
+            document.getElementById('product-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveProductData();
+            });
+
+            // Reset Catalog Button
+            document.getElementById('reset-default-btn').addEventListener('click', function() {
+                if (confirm('Are you sure you want to reset all catalog modifications and restore the default 22 products?')) {
+                    products = JSON.parse(JSON.stringify(DEFAULT_CATALOG));
+                    localStorage.setItem('products', JSON.stringify(products));
+                    renderProductsList(products);
+                    renderStatsDashboard();
+                    showToast('Store catalog successfully reset to defaults.', 'success');
+                }
+            });
+        });
+
+        // 1. Setup Admin Navbar
+        function initAdminNavbar() {
+            const authSection = document.getElementById('admin-auth-section');
+            if (!authSection) return;
+
+            authSection.innerHTML = `
+                <div class="d-flex align-items-center gap-2 flex-wrap">
+                    <span class="nav-link nav-link-custom text-nowrap active" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.25);">
+                        <i class="fa-solid fa-circle-user text-danger me-1"></i> Admin: ${currentAdmin.name.split(' ')[0]}
+                    </span>
+                    <a href="#" class="nav-link nav-link-custom text-danger" id="admin-logout-btn" title="Logout">
+                        <i class="fa-solid fa-power-off"></i>
+                    </a>
+                </div>
+            `;
+
+            document.getElementById('admin-logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('currentAdmin');
+                showToast('Administrator session ended. Redirecting...', 'info');
+                setTimeout(() => {
+                    window.location.href = 'admin-login.html';
+                }, 1000);
+            });
+        }
+
+        // 2. Render Metrics Dashboard
+        function renderStatsDashboard() {
+            // Count Revenue
+            const revenueSum = orders.reduce((sum, o) => sum + o.total, 0);
+            document.getElementById('stat-revenue').innerText = `₹${revenueSum.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            
+            // Count Orders
+            document.getElementById('stat-orders').innerText = orders.length;
+
+            // Count Products
+            document.getElementById('stat-products').innerText = products.length;
+
+            // Count Feedbacks
+            document.getElementById('stat-feedbacks').innerText = feedbacks.length;
+        }
+
+        // 3. Render Product Table
+        function renderProductsList(list) {
+            const tbody = document.getElementById('admin-products-table-body');
+            tbody.innerHTML = '';
+
+            if (list.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="text-center text-muted py-4">No matching products found in the catalog.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            list.forEach((prod, index) => {
+                const stockBadgeClass = prod.stockStatus === 'instock' ? 'stock-instock' : 'stock-low';
+                const stockBadgeText = prod.stockStatus === 'instock' ? 'In Stock' : `Low (${prod.stockCount})`;
+                const originalPriceVal = prod.originalPrice ? `₹${prod.originalPrice.toFixed(2)}` : '-';
+                const badgeText = prod.badge || '-';
+
+                // We find original index in main products array to allow correct editing/deleting
+                const originalIndex = products.findIndex(p => p.title === prod.title);
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <img src="${prod.image}" class="product-admin-thumb" alt="${prod.title}">
+                    </td>
+                    <td>
+                        <span class="fw-semibold text-white">${prod.title}</span>
+                    </td>
+                    <td>
+                        <span class="text-muted small">${prod.category}</span>
+                    </td>
+                    <td>
+                        <span class="fw-bold text-cyan">₹${prod.price.toFixed(2)}</span>
+                    </td>
+                    <td>
+                        <span class="text-white">${prod.stockCount || '-'}</span>
+                    </td>
+                    <td>
+                        <div class="product-stock-badge ${stockBadgeClass} d-inline-flex m-0">
+                            <span class="stock-dot"></span> ${stockBadgeText}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="badge bg-secondary">${badgeText}</span>
+                    </td>
+                    <td class="text-end">
+                        <div class="d-flex gap-2 justify-content-end">
+                            <button class="admin-btn admin-btn-secondary py-1 px-2" onclick="openEditProductModal(${originalIndex})">
+                                <i class="fa-solid fa-pencil"></i>
+                            </button>
+                            <button class="admin-btn admin-btn-danger py-1 px-2" onclick="deleteProduct(${originalIndex})">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 4. Render Orders Table
+        function renderOrdersList(list) {
+            const tbody = document.getElementById('admin-orders-table-body');
+            tbody.innerHTML = '';
+
+            if (list.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">No order logs verified yet.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            // Sort orders descending by date
+            list.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            list.forEach((order) => {
+                const orderDate = new Date(order.date);
+                const formattedDate = orderDate.toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                // Render items badges
+                let itemsHtml = '';
+                order.items.forEach(item => {
+                    itemsHtml += `<span class="order-badge-item">${item.title} (x${item.quantity})</span>`;
+                });
+
+                // Compute select dropdown for status
+                // Placed, Processing, Shipped, Delivered
+                // We find original index in main orders array
+                const originalIndex = orders.findIndex(o => o.orderId === order.orderId);
+
+                // Dynamically compute the time-based calculated status if status is not explicitly set,
+                // or use the stored status
+                let currentStatus = order.status;
+                if (!currentStatus) {
+                    // Fallback to time-based calculation matching view orders.html
+                    const timeDiffHours = (new Date() - orderDate) / (1000 * 60 * 60);
+                    if (timeDiffHours >= 24) currentStatus = 'Delivered';
+                    else if (timeDiffHours >= 1) currentStatus = 'Shipped';
+                    else currentStatus = 'Processing';
+                }
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <span class="text-cyan fw-bold">#${order.orderId}</span>
+                    </td>
+                    <td>
+                        <span class="text-white small">${order.userEmail}</span>
+                    </td>
+                    <td>
+                        <span class="text-muted small">${formattedDate}</span>
+                    </td>
+                    <td style="max-width: 250px;">
+                        ${itemsHtml}
+                    </td>
+                    <td>
+                        <span class="fw-bold text-emerald">₹${order.total.toFixed(2)}</span>
+                    </td>
+                    <td>
+                        <span class="badge bg-dark border border-secondary text-uppercase">${order.paymentMethod}</span>
+                    </td>
+                    <td>
+                        <select class="status-dropdown" onchange="updateOrderStatus(${originalIndex}, this.value)">
+                            <option value="Processing" class="status-opt-processing" ${currentStatus === 'Processing' ? 'selected' : ''}>Processing</option>
+                            <option value="Shipped" class="status-opt-shipped" ${currentStatus === 'Shipped' ? 'selected' : ''}>Shipped</option>
+                            <option value="Delivered" class="status-opt-delivered" ${currentStatus === 'Delivered' ? 'selected' : ''}>Delivered</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 5. Render Feedbacks Table
+        function renderFeedbacksList(list) {
+            const tbody = document.getElementById('admin-feedbacks-table-body');
+            tbody.innerHTML = '';
+
+            if (list.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">No customer feedback logs currently active.</td>
+                    </tr>
+                `;
+                return;
+            }
+
+            list.forEach((feedback, index) => {
+                const date = feedback.date ? new Date(feedback.date).toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                }) : 'N/A';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>
+                        <span class="text-muted small">${date}</span>
+                    </td>
+                    <td>
+                        <span class="fw-semibold text-white">${feedback.name}</span>
+                    </td>
+                    <td>
+                        <span class="text-cyan">${feedback.email}</span>
+                    </td>
+                    <td>
+                        <span class="badge bg-info text-dark">Complaint Ticket / Customer Care Review</span>
+                    </td>
+                    <td class="text-end">
+                        <button class="admin-btn admin-btn-danger py-1 px-3" onclick="resolveFeedback(${index})">
+                            <i class="fa-solid fa-circle-check"></i> Mark Resolved
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Product Modal Handlers
+        window.openAddProductModal = function() {
+            document.getElementById('productModalLabel').innerText = 'Add Product Item';
+            document.getElementById('edit-product-index').value = '';
+            document.getElementById('product-form').reset();
+            productModalBootstrap.show();
+        };
+
+        window.openEditProductModal = function(index) {
+            document.getElementById('productModalLabel').innerText = 'Edit Product Item';
+            document.getElementById('edit-product-index').value = index;
+
+            const prod = products[index];
+            document.getElementById('prodTitle').value = prod.title;
+            document.getElementById('prodCategory').value = prod.category;
+            document.getElementById('prodPrice').value = prod.price;
+            document.getElementById('prodOriginalPrice').value = prod.originalPrice || '';
+            document.getElementById('prodStockCount').value = prod.stockCount || 10;
+            document.getElementById('prodStockStatus').value = prod.stockStatus || 'instock';
+            document.getElementById('prodImage').value = prod.image;
+            document.getElementById('prodBadge').value = prod.badge || '';
+
+            productModalBootstrap.show();
+        };
+
+        // CRUD Operations
+        function saveProductData() {
+            const indexStr = document.getElementById('edit-product-index').value;
+            
+            const title = document.getElementById('prodTitle').value.trim();
+            const category = document.getElementById('prodCategory').value;
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const origPriceStr = document.getElementById('prodOriginalPrice').value;
+            const originalPrice = origPriceStr ? parseFloat(origPriceStr) : undefined;
+            const stockCount = parseInt(document.getElementById('prodStockCount').value);
+            const stockStatus = document.getElementById('prodStockStatus').value;
+            const image = document.getElementById('prodImage').value.trim();
+            const badge = document.getElementById('prodBadge').value.trim();
+
+            const productData = {
+                title,
+                category,
+                price,
+                originalPrice,
+                stockCount,
+                stockStatus,
+                image,
+                badge: badge || undefined
+            };
+
+            if (indexStr === '') {
+                // Add New Product
+                // Avoid title collision
+                if (products.some(p => p.title.toLowerCase() === title.toLowerCase())) {
+                    showToast('Product title already exists in the catalog!', 'error');
+                    return;
+                }
+                products.push(productData);
+                showToast(`Product "${title}" successfully added!`, 'success');
+            } else {
+                // Edit Existing Product
+                const index = parseInt(indexStr);
+                products[index] = productData;
+                showToast(`Product "${title}" updated successfully!`, 'success');
+            }
+
+            localStorage.setItem('products', JSON.stringify(products));
+            renderProductsList(products);
+            renderStatsDashboard();
+            productModalBootstrap.hide();
+        }
+
+        window.deleteProduct = function(index) {
+            const title = products[index].title;
+            if (confirm(`Are you sure you want to delete "${title}" from the catalog?`)) {
+                products.splice(index, 1);
+                localStorage.setItem('products', JSON.stringify(products));
+                renderProductsList(products);
+                renderStatsDashboard();
+                showToast(`Product "${title}" has been deleted.`, 'info');
+            }
+        };
+
+        window.updateOrderStatus = function(index, newStatus) {
+            orders[index].status = newStatus;
+            localStorage.setItem('orders', JSON.stringify(orders));
+            renderStatsDashboard();
+            showToast(`Order #${orders[index].orderId} status changed to: ${newStatus}`, 'success');
+        };
+
+        window.resolveFeedback = function(index) {
+            const name = feedbacks[index].name;
+            feedbacks.splice(index, 1);
+            localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+            renderFeedbacksList(feedbacks);
+            renderStatsDashboard();
+            showToast(`Feedback ticket for ${name} resolved.`, 'success');
+        };
+
+        // Toast popup utility
+        function showToast(message, type = 'success') {
+            const toastContainer = document.getElementById('toast-alerts-box');
+            if (!toastContainer) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'custom-toast';
+            
+            let iconClass = 'fa-check-circle';
+            if (type === 'error') {
+                iconClass = 'fa-exclamation-circle';
+                toast.style.borderLeftColor = 'var(--accent-danger)';
+            } else if (type === 'info') {
+                iconClass = 'fa-info-circle';
+                toast.style.borderLeftColor = '#3b82f6';
+            }
+
+            toast.innerHTML = `
+                <i class="fa-solid ${iconClass} custom-toast-icon" style="color: ${type === 'error' ? 'var(--accent-danger)' : (type === 'info' ? '#3b82f6' : 'var(--accent-cyan)')}"></i>
+                <div class="custom-toast-body">${message}</div>
+            `;
+
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>

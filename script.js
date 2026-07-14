@@ -70,7 +70,10 @@ function initAuthNavbar() {
 
     if (currentUser) {
         authSection.innerHTML = `
-            <div class="d-flex align-items-center gap-2">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+                <a href="view orders.html" class="nav-link nav-link-custom text-nowrap">
+                    <i class="fa-solid fa-receipt me-1 text-cyan"></i> My Orders
+                </a>
                 <span class="nav-link nav-link-custom active text-nowrap" style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.25);">
                     <i class="fa-solid fa-circle-user text-emerald me-1"></i> Hi, ${currentUser.name.split(' ')[0]}
                 </span>

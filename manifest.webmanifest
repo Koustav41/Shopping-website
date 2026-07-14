@@ -1,0 +1,24 @@
+{
+  "name": "Tech World - Premium Gadgets Store",
+  "short_name": "Tech World",
+  "description": "Discover high-end gadgets, computer hardware, and mobile accessories at the most attractive discounted prices.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0a0e17",
+  "theme_color": "#0a0e17",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "image/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "image/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
