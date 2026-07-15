@@ -1,5 +1,5 @@
 (function () {
-    const API_BASE = '/api/data';
+    const API_BASE = '/.netlify/functions/shared-data';
     const storage = window.localStorage;
     const originalGetItem = storage.getItem.bind(storage);
     const originalSetItem = storage.setItem.bind(storage);

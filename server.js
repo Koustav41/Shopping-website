@@ -75,9 +75,10 @@ app.get('*', (req, res) => {
 });
 
 const startServer = () => {
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
         console.log(`Server running on port ${PORT}`);
         console.log(`Open http://localhost:${PORT} in your browser`);
+        console.log(`Or use your local IP address from the same network, for example http://192.168.1.10:${PORT}`);
     });
 };
 
