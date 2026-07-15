@@ -231,7 +231,7 @@ const ALL_PRODUCTS = [
         category: "Audio",
         stockCount: 12,
         stockStatus: "low",
-        image: "",
+        image: "image/products/audio.svg",
         badge: "20% Off"
     },
     {
@@ -239,7 +239,7 @@ const ALL_PRODUCTS = [
         price: 199.99,
         category: "Storage",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?q=80&w=800",
+        image: "image/products/storage.svg",
         badge: "New"
     },
     {
@@ -249,7 +249,7 @@ const ALL_PRODUCTS = [
         category: "Audio",
         stockCount: 3,
         stockStatus: "low",
-        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=800",
+        image: "image/products/audio.svg",
         badge: "Hot"
     },
     {
@@ -257,7 +257,7 @@ const ALL_PRODUCTS = [
         price: 900.99,
         category: "Audio",
         stockStatus: "instock",
-        image: "image/Gemini_Generated_Image_p3ejslp3ejslp3ej.png",
+        image: "image/products/audio.svg",
         badge: "New"
     },
     {
@@ -266,7 +266,7 @@ const ALL_PRODUCTS = [
         originalPrice: 1250.00,
         category: "Audio",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800",
+        image: "image/products/audio.svg",
         badge: "Offer"
     },
     {
@@ -275,7 +275,7 @@ const ALL_PRODUCTS = [
         category: "Wearables",
         stockCount: 4,
         stockStatus: "low",
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800",
+        image: "image/products/watch.svg",
         badge: "Hot"
     },
     {
@@ -284,7 +284,7 @@ const ALL_PRODUCTS = [
         originalPrice: 8750.00,
         category: "Smart Devices",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1527977966376-1c8408f9f108?q=80&w=800",
+        image: "image/products/drone.svg",
         badge: "New"
     },
     {
@@ -292,7 +292,7 @@ const ALL_PRODUCTS = [
         price: 5000.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?q=80&w=800",
+        image: "image/products/keyboard.svg",
         badge: "Offer"
     },
     {
@@ -300,7 +300,7 @@ const ALL_PRODUCTS = [
         price: 20000.99,
         category: "Audio",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1545454675-3531b543be5d?q=80&w=800",
+        image: "image/products/audio.svg",
         badge: "New"
     },
     {
@@ -308,7 +308,7 @@ const ALL_PRODUCTS = [
         price: 2000.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?q=80&w=800",
+        image: "image/products/keyboard.svg",
         badge: "Hot"
     },
     {
@@ -316,7 +316,7 @@ const ALL_PRODUCTS = [
         price: 200.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=800"
+        image: "image/products/keyboard.svg"
     },
     {
         title: "FHD Frameless IPS Monitor",
@@ -324,7 +324,7 @@ const ALL_PRODUCTS = [
         originalPrice: 16250.00,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?q=80&w=800",
+        image: "image/products/keyboard.svg",
         badge: "Offer"
     },
     {
@@ -333,7 +333,7 @@ const ALL_PRODUCTS = [
         category: "Computers & Gaming",
         stockCount: 2,
         stockStatus: "low",
-        image: "https://images.unsplash.com/photo-1591488320449-011701bb6704?q=80&w=800",
+        image: "image/products/keyboard.svg",
         badge: "Hot"
     },
     {
@@ -341,14 +341,14 @@ const ALL_PRODUCTS = [
         price: 8000.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "https://zebronics.com/cdn/shop/files/ZEB-Phantom-pic2.jpg?v=1696845618&width=1200"
+        image: "image/products/keyboard.svg"
     },
     {
         title: "Wireless Bluetooth Mic System",
         price: 13500.99,
         category: "Audio",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800",
+        image: "image/products/audio.svg",
         badge: "New"
     },
     {
@@ -357,7 +357,7 @@ const ALL_PRODUCTS = [
         originalPrice: 87500.00,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800",
+        image: "image/products/phone.svg",
         badge: "Offer"
     },
     {
@@ -365,7 +365,7 @@ const ALL_PRODUCTS = [
         price: 30000.78,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "https://image01-in.oneplus.net/ebp/202404/07/1-M00-52-A5-CpgM7mYR-yOAN0suAAH06ke98vE178.png"
+        image: "image/products/phone.svg"
     },
     {
         title: "Samsung S22 5G (128GB)",
@@ -373,7 +373,7 @@ const ALL_PRODUCTS = [
         originalPrice: 38600.00,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=800",
+        image: "image/products/phone.svg",
         badge: "25% Off"
     },
     {
@@ -381,14 +381,14 @@ const ALL_PRODUCTS = [
         price: 32000.99,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=800"
+        image: "image/products/phone.svg"
     },
     {
         title: "Apple iPhone 16",
         price: 78000.99,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=800",
+        image: "image/products/phone.svg",
         badge: "New"
     },
     {
@@ -397,7 +397,7 @@ const ALL_PRODUCTS = [
         category: "Cameras & Phones",
         stockCount: 1,
         stockStatus: "low",
-        image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800",
+        image: "image/products/phone.svg",
         badge: "Hot"
     },
     {
@@ -405,7 +405,7 @@ const ALL_PRODUCTS = [
         price: 350.00,
         category: "Accessories",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=800"
+        image: "image/products/audio.svg"
     }
 ];
 

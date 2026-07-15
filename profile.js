@@ -48,48 +48,22 @@ document.addEventListener('DOMContentLoaded', async function () {
 
     // --- 1. Profile Retrieval Routine ---
     async function fetchUserProfile(email, authToken) {
-        let user = null;
+        const localUsers = JSON.parse(localStorage.getItem('users') || '[]');
+        let user = localUsers.find(u => u.email === email);
         
-        // Try backend first
-        const apiUrl = window.getApiUrl ? window.getApiUrl('/api/auth/profile') : '/api/auth/profile';
-        try {
-            const response = await fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${authToken}`
-                }
-            });
-            const data = await response.json();
-            
-            if (data.success) {
-                user = data.user;
-                // Sync backend data to localStorage users database
-                syncLocalUser(user);
-            }
-        } catch (apiErr) {
-            console.warn('Backend profile fetch failed. Using local storage data.', apiErr);
-        }
-
-        // Fallback to local storage
+        // If user is completely missing in localStorage for some reason, generate default
         if (!user) {
-            const localUsers = JSON.parse(localStorage.getItem('users') || '[]');
-            user = localUsers.find(u => u.email === email);
-            
-            // If user is completely missing in localStorage for some reason, generate default
-            if (!user) {
-                user = {
-                    name: sessionUser.name,
-                    email: sessionUser.email,
-                    phone: '',
-                    address: '',
-                    picture: sessionUser.picture || '',
-                    isGoogle: sessionUser.isGoogle || false,
-                    createdAt: new Date().toISOString()
-                };
-                localUsers.push(user);
-                localStorage.setItem('users', JSON.stringify(localUsers));
-            }
+            user = {
+                name: sessionUser.name,
+                email: sessionUser.email,
+                phone: '',
+                address: '',
+                picture: sessionUser.picture || '',
+                isGoogle: sessionUser.isGoogle || false,
+                createdAt: new Date().toISOString()
+            };
+            localUsers.push(user);
+            localStorage.setItem('users', JSON.stringify(localUsers));
         }
 
         return user;
@@ -197,56 +171,21 @@ document.addEventListener('DOMContentLoaded', async function () {
             saveBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin me-1"></i> Saving Changes...`;
 
             try {
-                let saveSuccess = false;
+                const localUsers = JSON.parse(localStorage.getItem('users') || '[]');
+                const idx = localUsers.findIndex(u => u.email === userDetails.email);
                 
-                // Attempt backend update
-                const apiUrl = window.getApiUrl ? window.getApiUrl('/api/auth/profile') : '/api/auth/profile';
-                try {
-                    const updatePayload = { name, phone, address };
+                if (idx !== -1) {
+                    localUsers[idx].name = name;
+                    localUsers[idx].phone = phone;
+                    localUsers[idx].address = address;
+                    
                     if (!userDetails.isGoogle && password) {
-                        updatePayload.password = password;
+                        localUsers[idx].password = password;
                     }
-
-                    const response = await fetch(apiUrl, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify(updatePayload)
-                    });
-                    const data = await response.json();
                     
-                    if (data.success) {
-                        userDetails = data.user;
-                        syncLocalUser(userDetails);
-                        saveSuccess = true;
-                    }
-                } catch (apiErr) {
-                    console.warn('Backend profile update failed. Performing local storage update.', apiErr);
-                }
-
-                // Local Storage update fallback
-                if (!saveSuccess) {
-                    const localUsers = JSON.parse(localStorage.getItem('users') || '[]');
-                    const idx = localUsers.findIndex(u => u.email === userDetails.email);
+                    localStorage.setItem('users', JSON.stringify(localUsers));
+                    userDetails = localUsers[idx];
                     
-                    if (idx !== -1) {
-                        localUsers[idx].name = name;
-                        localUsers[idx].phone = phone;
-                        localUsers[idx].address = address;
-                        
-                        if (!userDetails.isGoogle && password) {
-                            localUsers[idx].password = password;
-                        }
-                        
-                        localStorage.setItem('users', JSON.stringify(localUsers));
-                        userDetails = localUsers[idx];
-                        saveSuccess = true;
-                    }
-                }
-
-                if (saveSuccess) {
                     // Update active currentUser session
                     const updatedSession = {
                         name: userDetails.name,
