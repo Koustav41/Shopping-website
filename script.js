@@ -2,7 +2,7 @@
 let cart = JSON.parse(localStorage.getItem('cart') || '[]');
 
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     // Core Initializations
     initNavbarScroll();
     initAuthNavbar();
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // 1. Navbar scroll aesthetic update
 function initNavbarScroll() {
     const navbar = document.querySelector('.navbar-custom');
-    window.addEventListener('scroll', function() {
+    window.addEventListener('scroll', function () {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
         } else {
@@ -30,7 +30,7 @@ function showToast(message, type = 'success') {
 
     const toast = document.createElement('div');
     toast.className = 'custom-toast';
-    
+
     let iconClass = 'fa-check-circle';
     if (type === 'error') {
         iconClass = 'fa-exclamation-circle';
@@ -46,7 +46,7 @@ function showToast(message, type = 'success') {
     `;
 
     toastContainer.appendChild(toast);
-    
+
     // Trigger animation
     setTimeout(() => {
         toast.classList.add('show');
@@ -83,7 +83,7 @@ function initAuthNavbar() {
             </div>
         `;
 
-        document.getElementById('logout-btn-link').addEventListener('click', function(e) {
+        document.getElementById('logout-btn-link').addEventListener('click', function (e) {
             e.preventDefault();
             localStorage.removeItem('currentUser');
             showToast('You have successfully logged out.', 'info');
@@ -104,10 +104,10 @@ function initAuthNavbar() {
 function updateCartCountBadge() {
     const badge = document.getElementById('cart-badge-count');
     if (!badge) return;
-    
+
     const count = cart.reduce((total, item) => total + item.quantity, 0);
     badge.innerText = count;
-    
+
     // Small pop animation on update
     badge.style.transform = 'scale(1.3)';
     setTimeout(() => {
@@ -124,14 +124,14 @@ function initQuantityAdjusters() {
         const qtyVal = card.querySelector('.qty-val');
 
         if (minusBtn && plusBtn && qtyVal) {
-            minusBtn.addEventListener('click', function() {
+            minusBtn.addEventListener('click', function () {
                 let current = parseInt(qtyVal.value);
                 if (current > 1) {
                     qtyVal.value = current - 1;
                 }
             });
 
-            plusBtn.addEventListener('click', function() {
+            plusBtn.addEventListener('click', function () {
                 let current = parseInt(qtyVal.value);
                 qtyVal.value = current + 1;
             });
@@ -164,9 +164,9 @@ function initAddToCart() {
 
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCountBadge();
-            
+
             showToast(`${quantity} x ${title} added to cart!`, 'success');
-            
+
             // Reset quantity display to 1 after adding
             qtyVal.value = 1;
         });
@@ -204,7 +204,7 @@ function initSearchAndFiltering() {
 
     // Keyword search trigger
     if (searchInput) {
-        searchInput.addEventListener('input', function(e) {
+        searchInput.addEventListener('input', function (e) {
             currentSearch = e.target.value.toLowerCase().trim();
             applyFilter();
         });
@@ -212,7 +212,7 @@ function initSearchAndFiltering() {
 
     // Category button trigger
     tabButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             tabButtons.forEach(btn => btn.classList.remove('active'));
             this.classList.add('active');
 
@@ -231,7 +231,7 @@ const ALL_PRODUCTS = [
         category: "Audio",
         stockCount: 12,
         stockStatus: "low",
-        image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=800",
+        image: "",
         badge: "20% Off"
     },
     {
@@ -413,9 +413,9 @@ const ALL_PRODUCTS = [
 function renderProductsList(productsList, isOffline = false) {
     const catalogGrid = document.getElementById('catalog-grid');
     if (!catalogGrid) return;
-    
+
     catalogGrid.innerHTML = ''; // Clear loader / previous items
-    
+
     if (isOffline) {
         const offlineBanner = document.createElement('div');
         offlineBanner.className = 'col-12';
@@ -427,7 +427,7 @@ function renderProductsList(productsList, isOffline = false) {
         `;
         catalogGrid.appendChild(offlineBanner);
     }
-    
+
     productsList.forEach(prod => {
         const badgeHTML = prod.badge ? `<div class="card-badge ${prod.badge.toLowerCase().includes('offer') || prod.badge.toLowerCase().includes('off') ? 'badge-offer' : (prod.badge.toLowerCase() === 'new' ? 'badge-new' : 'badge-hot')}">${prod.badge}</div>` : '';
         const originalPriceHTML = prod.originalPrice ? `<span class="product-original-price">₹${prod.originalPrice.toFixed(2)}</span>` : '';
@@ -472,16 +472,20 @@ function renderProductsList(productsList, isOffline = false) {
     initSearchAndFiltering();
 }
 
-// 8. Dynamic Product Catalog Loader (Loads from localStorage)
+// 8. Dynamic Product Catalog Loader (Loads from localStorage with versioning)
 function loadProductsCatalog() {
     const catalogGrid = document.getElementById('catalog-grid');
     if (!catalogGrid) return;
 
     try {
+        const CATALOG_VERSION = 'v2_images_updated';
+        let storedVersion = localStorage.getItem('catalog_version');
         let storedProducts = JSON.parse(localStorage.getItem('products') || 'null');
-        if (!storedProducts) {
+
+        if (!storedProducts || storedVersion !== CATALOG_VERSION) {
             storedProducts = ALL_PRODUCTS;
             localStorage.setItem('products', JSON.stringify(storedProducts));
+            localStorage.setItem('catalog_version', CATALOG_VERSION);
         }
         renderProductsList(storedProducts, false);
     } catch (err) {
@@ -495,7 +499,7 @@ function initFeedbackForm() {
     const form = document.getElementById('complaints-form');
     if (!form) return;
 
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', async function (e) {
         e.preventDefault();
         const name = document.getElementById('feedback-name').value.trim();
         const email = document.getElementById('feedback-email').value.trim();

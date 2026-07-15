@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="manifest" href="manifest.webmanifest">
     <meta name="theme-color" content="#0a0e17">
@@ -87,8 +88,9 @@
 
                         <!-- Simulated Google Login Button (Fallback and Local Dev testing) -->
                         <button type="button" id="custom-google-btn" class="btn-google-simulated">
-                            <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google Logo" style="width: 18px; height: 18px;">
-                            <span>Sign in with Google (Demo Simulator)</span>
+                            <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google Logo"
+                                style="width: 18px; height: 18px;">
+                            <span>Sign in with Google (Demo Simulator for visitor only)</span>
                         </button>
                     </div>
 
@@ -112,45 +114,55 @@
                     <i class="fa-solid fa-xmark"></i>
                 </button>
                 <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google Logo" class="g-sim-logo">
-                <h4 class="g-sim-title">Choose an account</h4>
+                <h4 class="g-sim-title">Choose an account(For demo/visitor Purpose)</h4>
                 <p class="g-sim-subtitle">to continue to Tech World Store</p>
             </div>
-            
+
             <div class="g-sim-accounts-list">
                 <!-- Account 1 -->
-                <button type="button" class="g-sim-account-item" data-email="alex.mercer@gmail.com" data-name="Alex Mercer" data-picture="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150">
-                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150" alt="Alex Mercer" class="g-sim-avatar">
+                <button type="button" class="g-sim-account-item" data-email="alex.mercer@gmail.com"
+                    data-name="Alex Mercer"
+                    data-picture="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=150" alt="Alex Mercer"
+                        class="g-sim-avatar">
                     <div class="g-sim-acc-info">
                         <p class="g-sim-acc-name">Alex Mercer</p>
                         <p class="g-sim-acc-email">alex.mercer@gmail.com</p>
                     </div>
                 </button>
-                
+
                 <!-- Account 2 -->
-                <button type="button" class="g-sim-account-item" data-email="sarah.connor@gmail.com" data-name="Sarah Connor" data-picture="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150">
-                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150" alt="Sarah Connor" class="g-sim-avatar">
+                <button type="button" class="g-sim-account-item" data-email="sarah.connor@gmail.com"
+                    data-name="Sarah Connor"
+                    data-picture="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150"
+                        alt="Sarah Connor" class="g-sim-avatar">
                     <div class="g-sim-acc-info">
                         <p class="g-sim-acc-name">Sarah Connor</p>
                         <p class="g-sim-acc-email">sarah.connor@gmail.com</p>
                     </div>
                 </button>
             </div>
-            
+
             <button type="button" class="g-sim-other-btn" id="google-sim-other-btn">
                 <i class="fa-solid fa-user-plus"></i> Use another account
             </button>
-            
+
             <!-- Custom Account Form (Hidden initially) -->
             <form id="google-sim-custom-form" class="g-sim-custom-form">
                 <div class="mb-3">
                     <label for="simName" class="form-label text-muted small mb-1 text-start d-block">Full Name</label>
-                    <input type="text" class="form-control auth-input py-2" id="simName" placeholder="e.g. John Doe" required>
+                    <input type="text" class="form-control auth-input py-2" id="simName" placeholder="e.g. John Doe"
+                        required>
                 </div>
                 <div class="mb-3">
-                    <label for="simEmail" class="form-label text-muted small mb-1 text-start d-block">Email address</label>
-                    <input type="email" class="form-control auth-input py-2" id="simEmail" placeholder="e.g. john.doe@gmail.com" required>
+                    <label for="simEmail" class="form-label text-muted small mb-1 text-start d-block">Email
+                        address</label>
+                    <input type="email" class="form-control auth-input py-2" id="simEmail"
+                        placeholder="e.g. john.doe@gmail.com" required>
                 </div>
-                <button type="submit" class="btn-submit-auth py-2"><i class="fa-solid fa-right-to-bracket me-2"></i>Sign In</button>
+                <button type="submit" class="btn-submit-auth py-2"><i class="fa-solid fa-right-to-bracket me-2"></i>Sign
+                    In</button>
             </form>
         </div>
     </div>

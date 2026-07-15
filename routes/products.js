@@ -9,7 +9,7 @@ const mockProducts = [
         category: "Audio",
         stockCount: 12,
         stockStatus: "low",
-        image: "https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?q=80&w=800",
+        image: "https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=800",
         badge: "20% Off"
     },
     {
@@ -17,7 +17,7 @@ const mockProducts = [
         price: 199.99,
         category: "Storage",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?q=80&w=800",
+        image: "https://images.unsplash.com/photo-1622536840156-538c064ceb34?q=80&w=800",
         badge: "New"
     },
     {
@@ -27,7 +27,7 @@ const mockProducts = [
         category: "Audio",
         stockCount: 3,
         stockStatus: "low",
-        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?q=80&w=800",
+        image: "https://images.unsplash.com/photo-1613040809024-b4ef7ba99bc3?q=80&w=800",
         badge: "Hot"
     },
     {
@@ -44,7 +44,7 @@ const mockProducts = [
         originalPrice: 1250.00,
         category: "Audio",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800",
+        image: "https://images.unsplash.com/photo-1599669454699-248893623440?q=80&w=800",
         badge: "Offer"
     },
     {
@@ -53,7 +53,7 @@ const mockProducts = [
         category: "Wearables",
         stockCount: 4,
         stockStatus: "low",
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800",
+        image: "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=800",
         badge: "Hot"
     },
     {
@@ -94,7 +94,7 @@ const mockProducts = [
         price: 200.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=800"
+        image: "https://images.unsplash.com/photo-1625842268584-8f3290447001?q=80&w=800"
     },
     {
         title: "FHD Frameless IPS Monitor",
@@ -126,7 +126,7 @@ const mockProducts = [
         price: 13500.99,
         category: "Audio",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=800",
+        image: "https://images.unsplash.com/photo-1616763355548-1b606f439f86?q=80&w=800",
         badge: "New"
     },
     {
@@ -151,7 +151,7 @@ const mockProducts = [
         originalPrice: 38600.00,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?q=80&w=800",
+        image: "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s22-5g.jpg",
         badge: "25% Off"
     },
     {
@@ -159,14 +159,14 @@ const mockProducts = [
         price: 32000.99,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?q=80&w=800"
+        image: "https://fdn2.gsmarena.com/vv/bigpic/realme-12-pro-plus.jpg"
     },
     {
         title: "Apple iPhone 16",
         price: 78000.99,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?q=80&w=800",
+        image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16.jpg",
         badge: "New"
     },
     {
@@ -175,7 +175,7 @@ const mockProducts = [
         category: "Cameras & Phones",
         stockCount: 1,
         stockStatus: "low",
-        image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=800",
+        image: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-16-pro-max.jpg",
         badge: "Hot"
     },
     {
@@ -183,7 +183,7 @@ const mockProducts = [
         price: 350.00,
         category: "Accessories",
         stockStatus: "instock",
-        image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?q=80&w=800"
+        image: "https://images.unsplash.com/photo-1605787020600-b9ebd5df1d07?q=80&w=800"
     }
 ];
 

@@ -4,8 +4,8 @@
   "description": "Discover high-end gadgets, computer hardware, and mobile accessories at the most attractive discounted prices.",
   "start_url": "/index.html",
   "display": "standalone",
-  "background_color": "#0a0e17",
-  "theme_color": "#0a0e17",
+  "background_color": "#F44336",
+  "theme_color": "#F44336",
   "orientation": "any",
   "icons": [
     {
