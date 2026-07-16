@@ -231,7 +231,7 @@ const ALL_PRODUCTS = [
         category: "Audio",
         stockCount: 12,
         stockStatus: "low",
-        image: "image/products/audio.svg",
+        image: "image/products/wired_headphones.png",
         badge: "20% Off"
     },
     {
@@ -239,7 +239,7 @@ const ALL_PRODUCTS = [
         price: 199.99,
         category: "Storage",
         stockStatus: "instock",
-        image: "image/products/storage.svg",
+        image: "image/products/usb_pendrive.png",
         badge: "New"
     },
     {
@@ -249,7 +249,7 @@ const ALL_PRODUCTS = [
         category: "Audio",
         stockCount: 3,
         stockStatus: "low",
-        image: "image/products/audio.svg",
+        image: "image/products/wireless_earphone.png",
         badge: "Hot"
     },
     {
@@ -257,7 +257,7 @@ const ALL_PRODUCTS = [
         price: 900.99,
         category: "Audio",
         stockStatus: "instock",
-        image: "image/products/audio.svg",
+        image: "image/products/gaming_tws.png",
         badge: "New"
     },
     {
@@ -266,7 +266,7 @@ const ALL_PRODUCTS = [
         originalPrice: 1250.00,
         category: "Audio",
         stockStatus: "instock",
-        image: "image/products/audio.svg",
+        image: "image/products/anc_headphones.png",
         badge: "Offer"
     },
     {
@@ -275,7 +275,7 @@ const ALL_PRODUCTS = [
         category: "Wearables",
         stockCount: 4,
         stockStatus: "low",
-        image: "image/products/watch.svg",
+        image: "image/products/smart_watch.png",
         badge: "Hot"
     },
     {
@@ -284,7 +284,7 @@ const ALL_PRODUCTS = [
         originalPrice: 8750.00,
         category: "Smart Devices",
         stockStatus: "instock",
-        image: "image/products/drone.svg",
+        image: "image/products/camera_drone.png",
         badge: "New"
     },
     {
@@ -292,7 +292,7 @@ const ALL_PRODUCTS = [
         price: 5000.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "image/products/keyboard.svg",
+        image: "image/products/gaming_keyboard.png",
         badge: "Offer"
     },
     {
@@ -300,7 +300,7 @@ const ALL_PRODUCTS = [
         price: 20000.99,
         category: "Audio",
         stockStatus: "instock",
-        image: "image/products/audio.svg",
+        image: "image/products/home_theatre.png",
         badge: "New"
     },
     {
@@ -308,7 +308,7 @@ const ALL_PRODUCTS = [
         price: 2000.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "image/products/keyboard.svg",
+        image: "image/products/gaming_mouse.png",
         badge: "Hot"
     },
     {
@@ -316,7 +316,7 @@ const ALL_PRODUCTS = [
         price: 200.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "image/products/keyboard.svg"
+        image: "image/products/wired_mouse.png"
     },
     {
         title: "FHD Frameless IPS Monitor",
@@ -324,7 +324,7 @@ const ALL_PRODUCTS = [
         originalPrice: 16250.00,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "image/products/keyboard.svg",
+        image: "image/products/ips_monitor.png",
         badge: "Offer"
     },
     {
@@ -333,7 +333,7 @@ const ALL_PRODUCTS = [
         category: "Computers & Gaming",
         stockCount: 2,
         stockStatus: "low",
-        image: "image/products/keyboard.svg",
+        image: "image/products/graphic_card.png",
         badge: "Hot"
     },
     {
@@ -341,14 +341,14 @@ const ALL_PRODUCTS = [
         price: 8000.99,
         category: "Computers & Gaming",
         stockStatus: "instock",
-        image: "image/products/keyboard.svg"
+        image: "image/products/pc_cabinet.png"
     },
     {
         title: "Wireless Bluetooth Mic System",
         price: 13500.99,
         category: "Audio",
         stockStatus: "instock",
-        image: "image/products/audio.svg",
+        image: "image/products/wireless_mic.png",
         badge: "New"
     },
     {
@@ -357,7 +357,7 @@ const ALL_PRODUCTS = [
         originalPrice: 87500.00,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "image/products/phone.svg",
+        image: "image/products/dslr_camera.png",
         badge: "Offer"
     },
     {
@@ -365,7 +365,7 @@ const ALL_PRODUCTS = [
         price: 30000.78,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "image/products/phone.svg"
+        image: "image/products/ec110c268359ca0ba2943085bee362d6.webp"
     },
     {
         title: "Samsung S22 5G (128GB)",
@@ -373,7 +373,7 @@ const ALL_PRODUCTS = [
         originalPrice: 38600.00,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "image/products/phone.svg",
+        image: "image/products/images.jpg",
         badge: "25% Off"
     },
     {
@@ -381,23 +381,24 @@ const ALL_PRODUCTS = [
         price: 32000.99,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "image/products/phone.svg"
+        image: "image/products/realme-12-pro-5g-submarine-blue-8gb-ram-128gb-storage-or-6-7-120hz-curved-amoled-display-or-64mp-periscope-50mp-sony-imx-890-ois-camera-8mp-or-32mp-selfie-camera-or-67w-super-vooc-charge-trive.jpg",
+        badge: "New"
     },
     {
         title: "Apple iPhone 16",
         price: 78000.99,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "image/products/phone.svg",
+        image: "image/products/Apple-iphone-16-black-128gb-Front-Back-View.png",
         badge: "New"
     },
     {
-        title: "Apple iPhone 16 Pro Max",
+        title: "Apple iPhone 17 Pro Max",
         price: 150000.00,
         category: "Cameras & Phones",
         stockCount: 1,
         stockStatus: "low",
-        image: "image/products/phone.svg",
+        image: "image/products/iphone-17-pro-17-pro-max-hero.png",
         badge: "Hot"
     },
     {
@@ -405,7 +406,7 @@ const ALL_PRODUCTS = [
         price: 350.00,
         category: "Accessories",
         stockStatus: "instock",
-        image: "image/products/audio.svg"
+        image: "image/products/images (1).jpg"
     }
 ];
 
@@ -478,7 +479,7 @@ function loadProductsCatalog() {
     if (!catalogGrid) return;
 
     try {
-        const CATALOG_VERSION = 'v2_images_updated';
+        const CATALOG_VERSION = 'v3_gemini_images';
         let storedVersion = localStorage.getItem('catalog_version');
         let storedProducts = JSON.parse(localStorage.getItem('products') || 'null');
 
