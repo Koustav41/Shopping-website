@@ -373,7 +373,7 @@ const ALL_PRODUCTS = [
         originalPrice: 38600.00,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "image/products/images.jpg",
+        image: "image/products/samsung_s22.jpg",
         badge: "25% Off"
     },
     {
@@ -381,7 +381,7 @@ const ALL_PRODUCTS = [
         price: 32000.99,
         category: "Cameras & Phones",
         stockStatus: "instock",
-        image: "image/products/realme-12-pro-5g-submarine-blue-8gb-ram-128gb-storage-or-6-7-120hz-curved-amoled-display-or-64mp-periscope-50mp-sony-imx-890-ois-camera-8mp-or-32mp-selfie-camera-or-67w-super-vooc-charge-trive.jpg",
+        image: "image/products/realme_12_pro.jpg",
         badge: "New"
     },
     {
@@ -406,7 +406,7 @@ const ALL_PRODUCTS = [
         price: 350.00,
         category: "Accessories",
         stockStatus: "instock",
-        image: "image/products/images (1).jpg"
+        image: "image/products/iphone_cover.jpg"
     }
 ];
 
@@ -442,7 +442,7 @@ function renderProductsList(productsList, isOffline = false) {
             <div class="product-card">
                 ${badgeHTML}
                 <div class="product-img-wrapper">
-                    <img src="${prod.image}" class="product-card-img" alt="${prod.title}">
+                    <img src="${prod.image}" class="product-card-img" alt="${prod.title}" onerror="this.onerror=null; this.src='image/products/phone.svg';">
                 </div>
                 <div class="product-details">
                     <span class="product-category">${prod.category}</span>
@@ -479,7 +479,7 @@ function loadProductsCatalog() {
     if (!catalogGrid) return;
 
     try {
-        const CATALOG_VERSION = 'v3_gemini_images';
+        const CATALOG_VERSION = 'v4_gemini_images_fixed';
         let storedVersion = localStorage.getItem('catalog_version');
         let storedProducts = JSON.parse(localStorage.getItem('products') || 'null');
 

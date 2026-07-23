@@ -747,7 +747,7 @@
                 originalPrice: 38600.00,
                 category: "Cameras & Phones",
                 stockStatus: "instock",
-                image: "image/products/images.jpg",
+                image: "image/products/samsung_s22.jpg",
                 badge: "25% Off"
             },
             {
@@ -755,7 +755,7 @@
                 price: 32000.99,
                 category: "Cameras & Phones",
                 stockStatus: "instock",
-                image: "image/products/realme-12-pro-5g-submarine-blue-8gb-ram-128gb-storage-or-6-7-120hz-curved-amoled-display-or-64mp-periscope-50mp-sony-imx-890-ois-camera-8mp-or-32mp-selfie-camera-or-67w-super-vooc-charge-trive.jpg"
+                image: "image/products/realme_12_pro.jpg"
             },
             {
                 title: "Apple iPhone 16",
@@ -779,7 +779,7 @@
                 price: 350.00,
                 category: "Accessories",
                 stockStatus: "instock",
-                image: "image/products/images (1).jpg"
+                image: "image/products/iphone_cover.jpg"
             }
         ];
 
@@ -790,7 +790,7 @@
         }
 
         // Initialize Variables with version control to clear cache on updates
-        const CATALOG_VERSION = 'v3_gemini_images';
+        const CATALOG_VERSION = 'v4_gemini_images_fixed';
         let storedVersion = localStorage.getItem('catalog_version');
         let products = JSON.parse(localStorage.getItem('products') || 'null');
 
@@ -916,7 +916,7 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>
-                        <img src="${prod.image}" class="product-admin-thumb" alt="${prod.title}">
+                        <img src="${prod.image}" class="product-admin-thumb" alt="${prod.title}" onerror="this.onerror=null; this.src='image/products/phone.svg';">
                     </td>
                     <td>
                         <span class="fw-semibold text-white">${prod.title}</span>

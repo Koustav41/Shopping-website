@@ -69,8 +69,13 @@
                         <div class="floating-input-group">
                             <label for="loginPassword" class="floating-label"><i class="fa-solid fa-lock me-1"></i>
                                 Password</label>
-                            <input type="password" class="form-control auth-input" id="loginPassword"
-                                placeholder="••••••••" required autocomplete="current-password">
+                            <div class="password-input-wrapper">
+                                <input type="password" class="form-control auth-input" id="loginPassword"
+                                    placeholder="••••••••" required autocomplete="current-password">
+                                <button type="button" class="password-toggle-btn" aria-label="Toggle password visibility" tabindex="-1">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <button type="submit" class="btn-submit-auth mt-2"><i

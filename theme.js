@@ -47,15 +47,55 @@ window.getApiUrl = function (path) {
         }
     };
 
+    // Function to auto-wrap any un-wrapped password inputs with wrapper & toggle button
+    function initPasswordToggles() {
+        const passwordInputs = document.querySelectorAll('input[type="password"]');
+        passwordInputs.forEach(input => {
+            if (!input.closest('.password-input-wrapper')) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'password-input-wrapper';
+                input.parentNode.insertBefore(wrapper, input);
+                wrapper.appendChild(input);
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'password-toggle-btn';
+                btn.setAttribute('aria-label', 'Show password');
+                btn.setAttribute('tabindex', '-1');
+                btn.innerHTML = '<i class="fa-solid fa-eye"></i>';
+                wrapper.appendChild(btn);
+            }
+        });
+    }
+
     // 4. Initialize elements as soon as DOM is ready
     document.addEventListener('DOMContentLoaded', function () {
         updateToggleButtons();
+        initPasswordToggles();
 
-        // Event delegation handles clicking on any theme button dynamically
+        // Event delegation handles clicking on theme button or password toggle button dynamically
         document.body.addEventListener('click', function (e) {
             const btn = e.target.closest('.theme-btn');
             if (btn) {
                 toggleTheme();
+                return;
+            }
+
+            const toggleBtn = e.target.closest('.password-toggle-btn');
+            if (toggleBtn) {
+                e.preventDefault();
+                const wrapper = toggleBtn.closest('.password-input-wrapper') || toggleBtn.parentElement;
+                const input = wrapper ? wrapper.querySelector('input') : null;
+                if (input) {
+                    const isPassword = input.type === 'password';
+                    input.type = isPassword ? 'text' : 'password';
+                    const icon = toggleBtn.querySelector('i');
+                    if (icon) {
+                        icon.className = isPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye';
+                    }
+                    toggleBtn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
+                    input.focus();
+                }
             }
         });
     });
